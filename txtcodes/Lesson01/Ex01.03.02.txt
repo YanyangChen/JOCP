@@ -1,0 +1,52 @@
+//************ Class(es) ***************
+
+class Car { 
+    char color;
+    boolean engineRunning;
+    int speed;
+
+    Car() {
+        color = 'W';
+        engineRunning = false;
+        speed = 0;
+    }
+
+    void pressButton () {
+        engineRunning = ! engineRunning; 
+    }
+
+    void accelerate() {
+        if (engineRunning) {
+            speed = speed + 10; 
+        }
+    }
+
+    void brake() {
+        if (speed >= 10) {
+	        speed = speed - 10; 
+        } else {
+           speed = 0;
+        }
+    }
+}
+
+class RacingCar extends Car {
+    boolean spoiler;
+
+    void turboAccelerate() {
+        if (engineRunning) {
+          speed=speed+20; 
+        }
+    }
+}
+
+
+
+//************ Main Method ***************
+
+RacingCar mycar = new RacingCar();
+mycar.pressButton();
+mycar.turboAccelerate();
+System.out.println(mycar.speed);
+System.out.println(mycar.spoiler);
+

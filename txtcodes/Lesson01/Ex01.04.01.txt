@@ -1,0 +1,59 @@
+//************ Class(es) ***************
+
+interface Turbo {
+    void toggleTurbo ();
+}
+
+interface SpeedInMile {
+    final double km2mile = 0.62137;
+    int getMilePerHour();
+}
+
+interface Drive extends SpeedInMile {
+    void accelerate();
+    void brake();
+}
+
+abstract class Vehicle implements Drive {
+    int speed;
+}
+
+class Car extends Vehicle {     
+    public void accelerate() {			// implements Drive・s method
+        speed = speed + 10;;
+    }
+    public void brake() {			// implements Drive・s method
+        speed = speed + 10;
+    }
+    public int getMilePerHour() {		// implements SpeedInMile・s method
+        return (int) Math.round(speed*km2mile);  
+    }
+}
+
+class RacingCar extends Car implements Turbo {
+    boolean turboState;
+    public void toggleTurbo () {		// implements Turbo・s method
+        turboState = ! turboState;
+    }
+    public void accelerate() {		        // overrides superclass method
+        speed = speed + 10 * (turboState?2:1);
+    }
+}
+
+
+//************ Main Method ***************
+
+RacingCar racingcar = new RacingCar();
+Turbo t1 = racingcar;
+SpeedInMile s1 = racingcar;
+Drive d1 = racingcar;
+Vehicle v1 = racingcar;
+Car c1 = racingcar;
+
+racingcar.accelerate();			// accelerate() inheried in RacingCar
+racingcar.brake ();			// brake() inheried in RacingCar
+d1.accelerate();			// accelerate() declared in Drive
+t1.toggleTurbo();			// toogleTurbo() declared in Turbo
+c1.accelerate();			// accelerate() declared in Car
+System.out.println("Speed in km/h: " + c1.speed);
+System.out.println("Speed in mph: " + s1.getMilePerHour());

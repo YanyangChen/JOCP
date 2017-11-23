@@ -1,0 +1,60 @@
+//************ Class(es) ***************
+
+class Car { 
+    private boolean engineRunning;
+
+    void setEngineRunning(boolean b) {
+        engineRunning = b; 
+    }
+    boolean getEngineRunning() {
+        return engineRunning; 
+    }
+}
+
+class RacingCar extends Car {
+    private byte engineRunning;  // 0:stopped 1:normal 2:turbo
+
+    void setEngineRunning(boolean b) {
+        super.setEngineRunning(b); 
+        engineRunning = (b ? (byte) 1 : (byte) 0);
+    }
+    
+    void setEngineMode(int m) {
+        if (m >= 0 && m<=2) {
+            engineRunning = (byte) m;
+            if (engineRunning == 0) {
+                super.setEngineRunning(false);
+            } else {
+                super.setEngineRunning(true);
+            }
+        }
+    }
+
+    byte getEngineMode() {
+        return engineRunning;
+    }
+}
+
+
+//************ Main Method ***************
+
+RacingCar racingcar = new RacingCar();
+Car car = racingcar;
+racingcar.setEngineMode(2);
+System.out.print(car.getEngineRunning());
+System.out.print(" : ");
+System.out.print(racingcar.getEngineRunning());
+System.out.print(" : ");
+System.out.println(racingcar.getEngineMode());
+racingcar.setEngineRunning(false);
+System.out.print(car.getEngineRunning());
+System.out.print(" : ");
+System.out.print(racingcar.getEngineRunning());
+System.out.print(" : ");
+System.out.println(racingcar.getEngineMode());
+car.setEngineRunning(true);
+System.out.print(car.getEngineRunning());
+System.out.print(" : ");
+System.out.print(racingcar.getEngineRunning());
+System.out.print(" : ");
+System.out.println(racingcar.getEngineMode());

@@ -1,0 +1,64 @@
+//************ Class(es) ***************
+
+class Car { 
+    int speed;
+
+    void accelerate() {
+        speed = speed + 10; 
+    }
+
+    void brake() {
+        speed = speed - 10;
+    }
+    
+    int getSpeed () {
+        return speed;
+    }
+}
+
+class RacingCar1 extends Car {
+    float speed;
+
+    void accelerate() {
+        speed = speed + 12;
+    }
+
+    void brake() {
+        speed = speed - 10;
+    }
+
+    int getSpeed () {
+        return (int)speed;
+    }
+}
+
+class RacingCar2 extends Car {
+    float speed;
+
+    void accelerate() {
+        speed = speed + 16;
+    }
+
+    void brake() {
+        speed = speed - 10;
+    }
+
+    int getSpeed () {
+        return (int) speed;
+    }
+}
+
+
+//************ Main Method ***************
+
+RacingCar1 racingcar = new RacingCar1();
+racingcar.accelerate();
+racingcar.brake();
+System.out.println(racingcar.getSpeed());
+RacingCar1 racingcar1 = new RacingCar1();
+RacingCar2 racingcar2 = new RacingCar2();
+Car[] cars = { racingcar1, racingcar2 };
+for (Car c : cars) {
+    c.accelerate();
+    System.out.println(c.speed + " : " + c.getSpeed());
+}

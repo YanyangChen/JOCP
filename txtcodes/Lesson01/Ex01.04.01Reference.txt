@@ -1,0 +1,30 @@
+//************ Class(es) ***************
+
+interface I1 {
+    final String name1 = "I1";
+}
+
+class C1 {
+    static String name1 = "C1";
+}
+
+class C2 extends C1 implements I1 {
+    void method1() {
+        System.out.println(name1);	     // Error. Conflicting name.
+    }
+}
+
+class D1 implements I1 {
+    static String name1 = "D1";		// Hide interface's name1
+}
+
+class D2 extends D1 {
+    void method1() {
+        System.out.println(name1); 	     // D1's name1
+    }
+}
+
+
+//************ Main Method ***************
+
+// no body

@@ -1,0 +1,58 @@
+//************ Class(es) ***************
+
+class Government {				//existing class for Government
+    private int treasuryBalance;
+
+    public void collectMoney(int money) {
+        treasuryBalance += money;
+    }
+    
+    public void treasuryReport() {
+        System.out.println("Government has: "+ treasuryBalance);
+    }
+}
+
+
+class GovernmentFinder {		//Singleton Factory for class Government
+    private static GovernmentFinder myFinder = null;
+    private Government theGovernment;
+
+    private GovernmentFinder () { }
+
+    public static synchronized GovernmentFinder getInstance() {
+        if (myFinder == null) {
+            myFinder = new GovernmentFinder();
+        }
+        return myFinder;
+    }
+
+    public synchronized Government getGovernment() {
+        if (theGovernment == null) {
+            theGovernment = new Government ();
+        }
+        return theGovernment;
+    }
+}
+
+class Human {
+    void payTax(int money) {
+        GovernmentFinder.getInstance().getGovernment().collectMoney(money);
+    }
+}
+
+class Car {
+    void extendLicense(int money) {
+        GovernmentFinder.getInstance().getGovernment().collectMoney(money);
+    }
+}
+
+
+//************ Main Method ***************
+
+Human peter = new Human();
+Human mary = new Human();
+Car car1 = new Car();
+peter.payTax(1000);
+mary.payTax(2000);
+car1.extendLicense(3000);
+GovernmentFinder.getInstance().getGovernment().treasuryReport();

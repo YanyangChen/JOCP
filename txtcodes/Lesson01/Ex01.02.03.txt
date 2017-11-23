@@ -1,0 +1,52 @@
+//************ Class(es) ***************
+
+class Car { 
+    private float speed;
+
+    void accelerate() {
+        speed = speed + 10; 
+    }
+
+    int getSpeed() {
+        return (int) speed;
+    }
+
+    float getSpeed2() {
+        return speed;
+    }
+}
+
+class CarTest { 
+    void doTest() {
+        Car car1 = new Car();
+        car1.accelerate();
+        int speed1 = car1.getSpeed();
+        car1.accelerate();
+        int speed2 = car1.getSpeed();
+        int avgSpeed = (speed1 + speed2)/2;
+        System.out.println("Average speed is : "+avgSpeed);
+    }
+}
+
+class NewCarTest { 
+    void doTest() {
+        Car car1 = new Car();
+        car1.accelerate();
+        float speed1 = car1.getSpeed2();
+        car1.accelerate();
+        float speed2 = car1.getSpeed2();
+        float avgSpeed = (speed1 + speed2)/2;
+        System.out.println("Average speed is : "+avgSpeed);
+    }
+}
+
+
+//************ Main Method ***************
+
+CarTest test1 = new CarTest();
+test1.doTest();
+NewCarTest test2 = new NewCarTest();
+test2.doTest();
+
+
+

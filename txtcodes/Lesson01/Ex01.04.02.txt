@@ -1,0 +1,60 @@
+//************ Class(es) ***************
+
+interface SpeedInMile {
+    final double km2mile = 0.62137;
+    int getSpeed();
+    int getMilePerHour();
+    default double getPreciseMilePerHour() {
+        return Math.round(this.getSpeed()*km2mile*100)/100.0;  
+    }
+}
+
+class Bus implements SpeedInMile { 
+    int speed;
+    public void accelerate() {
+        speed = speed + 10;;
+    }
+    public void brake() {
+        speed = speed - 10;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public int getMilePerHour() {
+        return (int) Math.round(speed*km2mile);  
+    }
+}
+
+class Van implements SpeedInMile { 
+    int speed;
+    public void accelerate() {
+        speed = speed + 10;;
+    }
+    public void brake() {
+        speed = speed - 10;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public int getMilePerHour() {
+        return (int) Math.round(speed*km2mile);  
+    }
+    public double getPreciseMilePerHour() {
+        return Math.round(this.getSpeed()*km2mile*10000)/10000.0;  
+    }
+}
+
+
+
+
+
+//************ Main Method ***************
+
+Bus bus = new Bus();
+bus.accelerate();
+System.out.println(bus.getMilePerHour());
+System.out.println(bus.getPreciseMilePerHour());
+Van van = new Van();
+van.accelerate();
+System.out.println(van.getMilePerHour());
+System.out.println(van.getPreciseMilePerHour());

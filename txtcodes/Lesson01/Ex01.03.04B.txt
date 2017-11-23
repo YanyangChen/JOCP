@@ -1,0 +1,29 @@
+//************ Class(es) ***************
+
+class Car { 
+    int speed;
+
+    void accelerate() {
+        speed = speed + 10; 
+    }
+
+    void brake() {
+        speed = speed - 10;
+    }
+}
+
+class RacingCar extends Car {
+    float speed;
+
+    void accelerate() {
+        speed = speed + 20;
+    }
+}
+
+//************ Main Method ***************
+
+RacingCar racingcar1 = new RacingCar();
+racingcar1.accelerate();
+racingcar1.brake();
+System.out.println(racingcar1.speed);
+System.out.println(((Car) racingcar1).speed);

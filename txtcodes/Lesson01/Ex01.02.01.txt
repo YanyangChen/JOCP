@@ -1,0 +1,65 @@
+//************ Class(es) ***************
+
+class Car { 
+    private char color;
+    private boolean engineRunning;
+    private int speed;
+
+    Car() {
+        color = 'W';
+        engineRunning = false;
+        speed = 0;
+    }
+
+    char getColor() {
+        return color; 
+    }
+
+    void setColor(char c) {
+        if ("WRGB".indexOf(c) >= 0) { 
+            color = c; 
+        }
+    }
+
+    boolean getEngineRunning () {
+        return engineRunning; 
+    }
+
+    void pressButton() {
+        engineRunning = ! engineRunning; 
+    }
+
+    int getSpeed() {
+        return speed; 
+    }
+
+    void accelerate() {
+        if (engineRunning) {
+            speed = speed + 10; 
+        }
+    }
+
+    void brake() {
+        if (speed >= 10) {
+	        speed = speed - 10; 
+        } else {
+           speed = 0;
+        }
+    }
+}
+
+
+
+//************ Main Method ***************
+
+Car mycar = new Car();
+mycar.setColor('R');
+mycar.pressButton();
+mycar.accelerate();
+System.out.println(mycar.getColor());
+System.out.println(mycar.getEngineRunning());
+System.out.println(mycar.getSpeed());
+// System.out.println(mycar.speed); // compilation error
+mycar.setColor('1');  // set an invalid color
+System.out.println(mycar.getColor());
+

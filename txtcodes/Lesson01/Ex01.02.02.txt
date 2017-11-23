@@ -1,0 +1,35 @@
+//************ Class(es) ***************
+
+class Car { 
+    char color;
+    boolean engineRunning;
+    int speed;
+    Person owner;
+}
+
+class Person { 
+    String name;
+    int birthYear;
+    String address;
+}
+
+
+
+
+//************ Main Method ***************
+
+Person person = new Person();
+person.name = "Peter";
+person.birthYear = 1980;
+person.address = "HongKong";
+Car car1 = new Car();
+car1.owner = person;
+Car car2 = new Car();
+car2.owner = person;
+System.out.println(car1.owner.name);
+System.out.println(car2.owner.name);        
+person.address = "Kowloon";
+System.out.println(car1.owner.address);        
+System.out.println(car2.owner.address);        
+
+

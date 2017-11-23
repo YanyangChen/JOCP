@@ -1,0 +1,45 @@
+//************ Class(es) ***************
+
+class Car { 
+    char color;
+    boolean engineRunning;
+    int speed;
+
+    Car() {
+        color = 'W';
+        engineRunning = false;
+        speed = 0;
+    }
+
+    void pressButton() {
+        engineRunning = ! engineRunning; 
+    }
+
+    void accelerate() {
+        if (engineRunning) {
+            speed = speed + 10; 
+        }
+    }
+
+    void brake() {
+        if (speed >= 10) {
+	        speed = speed - 10; 
+        } else {
+           speed = 0;
+        }
+    }
+
+}
+
+
+//************ Main Method ***************
+
+Car mycar = new Car();
+mycar.accelerate();
+System.out.println(mycar.speed);
+mycar.pressButton();
+mycar.accelerate();
+System.out.println(mycar.speed);
+mycar.brake();
+mycar.brake();        
+System.out.println(mycar.speed);

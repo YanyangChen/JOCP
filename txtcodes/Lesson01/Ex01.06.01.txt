@@ -1,0 +1,46 @@
+//************ Class(es) ***************
+
+class Government {
+    private static Government government = null;
+    private int treasuryBalance;
+
+    private Government() { }
+
+    public static synchronized Government getInstance() {
+        if (government == null) {
+            government = new Government();
+        }
+        return government;
+    }
+
+    public void collectMoney(int money) {
+        treasuryBalance += money;
+    }
+    
+    public void treasuryReport() {
+        System.out.println("Government has: "+ treasuryBalance);
+    }
+}
+
+class Human {
+    void payTax(int money) {
+        Government.getInstance().collectMoney(money);
+    }
+}
+
+class Car {
+    void extendLicense(int money) {
+        Government.getInstance().collectMoney(money);
+    }
+}
+
+
+//************ Main Method ***************
+
+Human peter = new Human();
+Human mary = new Human();
+Car car1 = new Car();
+peter.payTax(1000);
+mary.payTax(2000);
+car1.extendLicense(3000);
+Government.getInstance().treasuryReport();

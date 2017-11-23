@@ -1,0 +1,47 @@
+//************ Class(es) ***************
+
+class Car {
+    static int counter1;
+    static int counter2;
+    static {
+        counter1 = 0;
+        counter2 = 0;
+    }
+    Car() {
+        counter1++;
+        counter2++;
+    }
+    static void staticmethod2() {
+        System.out.println("Car");
+    }
+}
+
+class RacingCar extends Car {
+    static int counter2;
+    RacingCar() {
+        counter2++;
+    }
+    static void staticmethod2() {
+        System.out.println("RacingCar");
+    }
+}
+
+
+//************ Main Method ***************
+
+Car c1 = new Car();
+Car c2 = new Car();
+RacingCar r1 = new RacingCar();
+RacingCar r2 = new RacingCar();
+RacingCar r3 = new RacingCar();        
+System.out.print(Car.counter1 + " : ");
+System.out.println(c1.counter1);
+System.out.print(Car.counter2 + " : ");
+System.out.println(c1.counter2);
+System.out.print(RacingCar.counter1 + " : ");
+System.out.println(r1.counter1);
+System.out.print(RacingCar.counter2 + " : ");
+System.out.println(r1.counter2);
+Car cr1 = r1;
+System.out.println(cr1.counter2);
+cr1.staticmethod2();
