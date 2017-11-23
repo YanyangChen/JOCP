@@ -1,0 +1,190 @@
+//************ Class(es) ***************
+
+abstract class Vehicle implements Comparable {
+    String licenseNo;
+    int produceYear;
+    int speed;
+    Vehicle (String s, int p) {
+        licenseNo = s;
+        produceYear = p;
+    }
+    public String toString() {return licenseNo;}
+    public int compareTo(Object v) { 
+        return this.licenseNo.compareTo(((Vehicle) v).getLicenseNo()); 
+    }
+    String getLicenseNo() {return licenseNo;}
+    int getSpeed() {return speed;}    
+    int getYear() {return produceYear;}
+    abstract void accelerate();
+}
+
+class Car extends Vehicle {
+    Car (String s, int p) {
+        super(s, p);
+    }
+    void accelerate() {
+        speed = speed + 10;
+    }
+}
+
+class RacingCar extends Car {
+    RacingCar (String s, int p) {
+        super(s, p);
+    }
+    void accelerate() {
+        speed = speed + 17;
+    }
+}
+
+class Bus extends Vehicle {
+    Bus (String s, int p) {
+        super(s, p);
+    }
+    void accelerate() {
+        speed = speed +5;
+    }
+}
+
+
+//************ Main Method ***************
+
+List<Vehicle> list = Arrays.asList(
+    new Car("C2000", 2000),
+    new Bus("B1990", 1990),
+    new RacingCar("R2014", 2014),
+    new Car("C2016", 2016),
+    new Bus("B2000", 2000)    
+);
+
+list.stream().forEach(v -> v.accelerate());
+
+System.out.println("Vehicles produced after 2010:");
+list.stream().filter(s -> s.getYear() > 2010).forEach(System.out::println);
+// printed R2014 C2016
+System.out.println();
+
+System.out.println("Vehicles after default sorting:");
+list.stream().sorted().forEach(System.out::println);
+// printed B1990 B2000 C2000 C2016 R2014
+System.out.println();
+
+System.out.println("Vehicles after sorting in reverse order:");
+list.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+// printed R2014 C2016 C2000 B2000 B1990
+System.out.println();
+
+System.out.println("Vehicle sorted by getYear:");
+list.stream().sorted(Comparator.comparing(Vehicle::getYear))
+        .forEach(System.out::println);
+// printed B1990 C2000 B2000 R2014 C2016 
+System.out.println();
+
+Function<Vehicle,Integer> test = Vehicle::getYear;
+
+System.out.println("using map(Vehicle::getYear)");
+list.stream().map(Vehicle::getYear)
+        .forEach(System.out::println);
+// printed 2000 1990 2014 2016 2000
+System.out.println();
+
+System.out.println("Vehicle sorted by getYear and then getLicenseNo:");
+list.stream().sorted(Comparator
+                    .comparing(Vehicle::getYear)
+                    .thenComparing(Vehicle::getLicenseNo))
+        .forEach(System.out::println);
+// printed B1990 B2000 C2000 R2014 C2016 
+System.out.println();
+
+System.out.println("Vehicle sorted by getYear(reversed) and then getLicenseNo:");
+list.stream().sorted(Comparator
+                    .comparing(Vehicle::getYear)
+                    .reversed()
+                    .thenComparing(Vehicle::getLicenseNo))
+        .forEach(System.out::println);
+// printed C2016 R2014 B2000 C2000 B1990
+System.out.println();
+
+
+System.out.print("IntStream of Vehicle speed and sum():");
+int totalSpeed = list.stream().mapToInt(v -> v.getSpeed()).sum();
+System.out.println(totalSpeed); // prints 47
+System.out.println();
+
+System.out.print("IntStream of Vehicle speed and reduce():");
+OptionalInt oTotalSpeed = list.stream()
+        .mapToInt(v -> v.getSpeed()).reduce(Integer::sum);
+System.out.println(oTotalSpeed.getAsInt()); // prints 47
+System.out.println();
+
+System.out.print("IntStream of Vehicle speed and reduce() with Idenity:");
+int totalSpeed2 = list.stream()
+        .mapToInt(v -> v.getSpeed()).reduce(0,Integer::sum);
+System.out.println(totalSpeed2); // prints 47
+System.out.println();
+
+System.out.println("Vehicle produced after 2010:");
+Map<String, List<Vehicle>> l1 = list.stream()
+        .collect(Collectors.groupingBy(v -> v.getClass().getSimpleName()));
+System.out.println(l1); 
+// printed {Bus=[B1990, B2000], Car=[C2000, C2016], RacingCar=[R2014]}
+System.out.println();
+
+System.out.println("Vehicle grouping by object class:");
+list.stream().collect(Collectors.groupingBy(v -> v.getClass().getSimpleName()))
+        .forEach( (k, v) -> System.out.print(k + " ") );
+// printed Bus Car RacingCar
+System.out.println();
+System.out.println();
+
+System.out.println("Vehicle grouping by Speed:");
+Map<Integer, List<Vehicle>> map = list.stream()
+        .collect(Collectors.groupingBy(v -> v.getSpeed()));
+System.out.println(map); 
+// printed {17=[R2014], 5=[B1990, B2000], 10=[C2000, C2016]}
+System.out.println();
+
+System.out.println("Vehicle grouping by Speed 2:");
+Map<Integer, List<Vehicle>> map2 = list.stream()
+        .sorted(Comparator.comparing(Vehicle::getSpeed))
+        .collect(Collectors.groupingBy(Vehicle::getSpeed));
+System.out.println(map2); 
+// printed {17=[R2014], 5=[B1990, B2000], 10=[C2000, C2016]}
+System.out.println(map2.getClass().getSimpleName()); 
+// printed HashMap
+System.out.println();
+
+System.out.println("Vehicle grouping by to TreeMap:");
+Map<Integer, List<Vehicle>> tMap = list.stream()
+        .collect(Collectors.groupingBy(Vehicle::getSpeed, 
+                                    TreeMap::new, 
+                                    Collectors.mapping(v -> v, Collectors.toList())));
+System.out.println(tMap); 
+// printed {5=[B1990, B2000], 10=[C2000, C2016], 17=[R2014]}
+System.out.println();
+
+System.out.println("Vehicle grouping by to LinkedHashMap:");
+Map<Integer, List<Vehicle>> lmap = list.stream()
+        .sorted(Comparator.comparing(Vehicle::getSpeed).reversed())
+        .collect(Collectors.groupingBy(Vehicle::getSpeed, 
+                                    LinkedHashMap::new, 
+                                    Collectors.mapping(v -> v, Collectors.toList())));
+System.out.println(lmap); 
+// printed {17=[R2014], 10=[C2000, C2016], 5=[B1990, B2000]}
+System.out.println();
+
+System.out.println("Vehicle toMap");
+Map<String, Vehicle> toMap = list.stream()
+        .collect(Collectors.toMap(Vehicle::getLicenseNo, 
+                                    v -> v));
+System.out.println(toMap); 
+// printed {C2016=C2016, C2000=C2000, B1990=B1990, B2000=B2000, R2014=R2014}
+System.out.println();
+
+
+//************ Other Setup ***************
+
+import java.util.*;
+import java.util.stream.*;
+import java.io.*;
+import java.util.function.*;
+

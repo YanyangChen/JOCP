@@ -1,0 +1,46 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+ArrayList<Locale> locales = new ArrayList<>();
+locales.add(new Locale("zh", "HK"));
+locales.add(new Locale("ja", "JP"));
+locales.add(new Locale("en", "GB"));
+locales.add(new Locale("de", "DE"));
+//locales.add(new Locale("es", "ES"));  // cause MissingResourceException
+
+for (Locale locale : locales) {
+    System.out.println(locale.getDisplayName() + ":");
+
+    ResourceBundle greeting = ResourceBundle.getBundle(
+                                        "javaapplication1.Greetings", locale); 
+
+    String greetStr = null;
+    Calendar today = new GregorianCalendar();
+    int hour_of_day = today.get(Calendar.HOUR_OF_DAY);
+    if (hour_of_day <= 12) {
+        greetStr = greeting.getString("morning");
+    } else if (hour_of_day > 12 && hour_of_day < 19) {
+        greetStr = greeting.getString("afternoon");
+    } else {
+        greetStr = greeting.getString("night");
+    }
+
+    // see Remarks  in Notes
+    // Comment out if you create properties file via NetBeans
+    try {
+        greetStr = new String(greetStr.getBytes("ISO-8859-1"), "UTF-8");
+    } catch (java.io.UnsupportedEncodingException e) {}
+
+    System.out.println(greetStr + "!!!");
+    System.out.println();
+}
+
+
+//************ Other Setup ***************
+
+import java.util.*;
+
+// copy the files for Greetings

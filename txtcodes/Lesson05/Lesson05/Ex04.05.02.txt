@@ -1,0 +1,96 @@
+//************ Step 2 ***************
+
+class Aclass extends Thread {
+    char target;
+    int noofruns;
+    Aclass (char a, int b) {
+        target = a;
+        noofruns = b;
+    }
+    public void run() {
+        if (target == 'x') {
+            Calclass.cal(target, noofruns);
+        } else {
+            Calclass.cal2(target, noofruns);
+        }
+    }
+}
+
+class Calclass {
+    static long k;
+    static synchronized void cal(char target, int noofruns) {
+        k = 0;
+        for (int i=1;i<=noofruns;i++) {
+            if (i<10) {
+                System.out.println("Adding i ("+i+") to k ("+k+") for "+target); 
+            } 
+            k = k + i;
+        }
+        System.out.println("The value of "+target+" is " +k);
+    }
+    static synchronized void cal2(char target, int noofruns) {
+        k = 0;
+        for (int i=1;i<=noofruns;i++) {
+            if (i<10) {
+                System.out.println("Adding i ("+i+") to k ("+k+") for "+target); 
+            } 
+            k = k + i;
+        }
+        System.out.println("The value of "+target+" is " +k);
+    }
+}
+
+
+
+//************ Step 3 ***************
+
+new Aclass('x',1000000).start();
+try {
+    Thread.sleep(10);
+} catch (InterruptedException ex) {
+    System.out.println(ex);
+}
+new Aclass('y',30).start();
+
+
+//************ Step 5 ***************
+
+class Calclass {
+    static long k;
+    static synchronized void cal(char target, int noofruns) {
+        k = 0;
+        for (int i=1;i<=noofruns;i++) {
+            if (i<10) {
+                System.out.println("Adding i ("+i+") to k ("+k+") for "+target); 
+            }
+            if (i == noofruns / 2) {
+                try {
+                    System.out.println(target + ": pausing when i = " + i);
+                    long tempk = k;
+                    Calclass.class.wait(5000);
+                    k = tempk;
+                    System.out.println(target + ": continuing ....");
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+            }
+            k = k + i;
+        }
+        System.out.println("The value of "+target+" is " +k);
+        Calclass.class.notify();
+    }
+    static synchronized void cal2(char target, int noofruns) {
+        k = 0;
+        for (int i=1;i<=noofruns;i++) {
+            if (i<10) {
+                System.out.println("Adding i ("+i+") to k ("+k+") for "+target); 
+            } 
+            k = k + i;
+        }
+        System.out.println("The value of "+target+" is " +k);
+        Calclass.class.notify();
+    }
+}
+
+
+

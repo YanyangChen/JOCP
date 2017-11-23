@@ -1,0 +1,42 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+ZonedDateTime zdtDefault = ZonedDateTime.now();        
+System.out.print("DateTime now according to sytem time zone : ");
+System.out.println(zdtDefault);
+System.out.println();
+
+ZoneId zoneHK = ZoneId.of("Asia/Hong_Kong");
+LocalDateTime now = LocalDateTime.now();
+ZonedDateTime zdtHK = ZonedDateTime.of(now, zoneHK);
+System.out.print("DateTime now for HK : ");
+System.out.println(zdtHK);
+System.out.println();
+
+ZonedDateTime zdtLondon = zdtHK.withZoneSameInstant(ZoneId.of("Europe/London"));
+System.out.println("London time is : " + zdtLondon);
+System.out.println("London vs HK time isEqual : " + zdtLondon.isEqual(zdtHK));
+System.out.println("London vs HK time equals : " + zdtLondon.equals(zdtHK));
+System.out.println();
+   
+ZoneId zoneNY = ZoneId.of("America/New_York");
+ZonedDateTime zdtNY = ZonedDateTime.of(LocalDate.of(2017, 3, 12), 
+                                       LocalTime.of(1, 59), zoneNY);
+System.out.println("A specified NY datetime :" + zdtNY);
+ZonedDateTime zdtNY1 = zdtNY.plusMinutes(1);
+System.out.println("After one mintue :" + zdtNY1);
+System.out.println();
+
+ZonedDateTime zdtNY201 = ZonedDateTime.of(2017, 3, 12, 2, 1, 0, 0, zoneNY);
+ZonedDateTime zdtNY301 = ZonedDateTime.of(2017, 3, 12, 3, 1, 0, 0, zoneNY);
+System.out.println("At 2:01 :" + zdtNY201);
+System.out.println("At 3:01 :" + zdtNY301);
+System.out.println("Above two the same : " + zdtNY201.equals(zdtNY301));
+
+
+//************ Other Setup ***************
+
+import java.time.*;

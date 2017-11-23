@@ -1,0 +1,35 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+for (Path p : FileSystems.getDefault().getRootDirectories()) {
+    System.out.println(p);
+    if (Files.exists(p)) {
+        try (DirectoryStream<Path> dirstream = Files.newDirectoryStream(p)) {
+            for (Path path : dirstream) {
+                System.out.println(path);
+            }
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    System.out.println();
+}
+System.out.println();
+
+Path myPath = Paths.get("C:/javaex/file1.txt");
+Path myDir = myPath.getParent();
+try (DirectoryStream<Path> stream = Files.newDirectoryStream(myDir)) {
+    for (Path path : stream) {
+        System.out.println(path);
+    }
+} catch (java.io.IOException e) {
+    throw new RuntimeException(e);
+}
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;

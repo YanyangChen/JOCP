@@ -1,0 +1,67 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Connection con = null;
+Statement stmt = null;
+ResultSet rs = null;        
+try {
+    con = DriverManager.getConnection(
+                         "jdbc:derby://localhost:1527/sample",
+                         "app",
+                         "app");
+
+    stmt = con.createStatement();
+    rs = stmt.executeQuery("SELECT NAME, ADDRESSLINE1 FROM APP.CUSTOMER");
+
+    while (rs.next()) {
+        String name = rs.getString("NAME");
+        String addr1 = rs.getString("ADDRESSLINE1");
+        System.out.println(name + " : " + addr1);
+    }
+    /** getting metadata and data */
+    System.out.println("\n*************\n");
+    rs = stmt.executeQuery("SELECT * FROM APP.CUSTOMER");
+    ResultSetMetaData rsmd = rs.getMetaData();
+    final int maxRows = 2;
+    int rowNumber = 1;
+    while (rs.next() && rowNumber <= maxRows) {
+        for (int i=1;i<=rsmd.getColumnCount();i++) {
+            System.out.print(rsmd.getColumnName(i));
+            switch (rsmd.getColumnType(i)) {
+                case 1:
+                    System.out.println(" (CHAR) : " + rs.getString(i));
+                    break;
+                case 3:
+                    System.out.println(" (DECIMAL) : " + rs.getBigDecimal(i));
+                    break;
+                case 4:
+                    System.out.println(" (INTEGER) : " + rs.getInt(i));
+                    break;
+                case 12:
+                    System.out.println(" (VARCHAR) : " + rs.getString(i));
+                    break;
+            }
+        }
+        rowNumber++;
+        System.out.println();
+    }
+    /**/
+} catch (SQLException ex) { 
+        System.out.println("SQLException occurs : " + ex.getMessage());
+} finally {
+    try {
+        if (rs != null) rs.close();
+        if (stmt != null) stmt.close();
+        if (con != null) con.close();    
+    } catch (SQLException ex) { 
+        System.out.println("SQLException occurs : " + ex.getMessage());
+    }
+}
+
+
+//************ Other Setup ***************
+
+import java.sql.*;

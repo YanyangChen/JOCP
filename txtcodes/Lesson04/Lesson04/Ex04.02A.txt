@@ -1,0 +1,35 @@
+//************ Step 2 ***************
+
+class Calx extends Thread {
+    public void run() {
+    long sum = 0;
+    for (int i=1;i<100000000;i++) {
+        sum = sum + i;
+    }
+    System.out.println("The value of Calx sum is " + sum);
+    }
+}
+
+class Caly extends Thread {
+    public void run() {
+    long sum=0;
+    for (int i=1;i<100;i++) {
+        sum = sum + i;
+    }
+    System.out.println("The value of Caly sum is " + sum);
+    }
+}
+
+//************ Step 3 ***************
+
+Calx objectX = new Calx();
+Caly objectY = new Caly();
+objectX.run();
+objectY.run();
+
+//************ Step 5 ***************
+
+Calx objectX = new Calx();
+Caly objectY = new Caly();
+objectX.start();
+objectY.start();

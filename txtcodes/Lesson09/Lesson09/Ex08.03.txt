@@ -1,0 +1,38 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+try (Connection con = DriverManager.getConnection(
+                         "jdbc:derby://localhost:1527/sample","app","app");
+      Statement stmt = con.createStatement();) {
+
+    DatabaseMetaData dbm = con.getMetaData();
+    ResultSet tables = dbm.getTables(null, null, "STAFF", null);
+    while (tables.next()) {
+        stmt.executeUpdate("DROP TABLE Staff");
+    }
+
+    stmt.executeUpdate("CREATE TABLE Staff"
+        + "(ID integer,Name varchar(20), Salary integer)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(1, 'Peter', 10000)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(2, 'John', 15000)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(3, 'Vincent', 20000)");
+    stmt.executeUpdate("UPDATE Staff SET Salary=Salary+5000 "
+            + "WHERE Name = 'Vincent'");
+
+    ResultSet rs = stmt.executeQuery("SELECT * FROM Staff");
+    while (rs.next()) {
+        System.out.print(rs.getObject("Name"));
+        System.out.println(" : " + rs.getObject("Salary"));
+    }
+
+} catch (SQLException ex) { 
+        System.out.println("SQLException occurs : " + ex.getMessage());
+}
+
+
+//************ Other Setup ***************
+
+import java.sql.*;

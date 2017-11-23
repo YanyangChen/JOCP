@@ -1,0 +1,53 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Instant instant = Instant.now();
+System.out.println(instant);
+System.out.println(instant.getEpochSecond());
+System.out.println();
+
+LocalDateTime ldtHK = LocalDateTime.now();
+ZoneOffset offsetHK = ZoneOffset.ofHours(8);
+Instant instant1 = ldtHK.toInstant(offsetHK);
+System.out.println(instant1.getEpochSecond());
+
+ZoneId zoneHK = ZoneId.of("Asia/Hong_Kong");
+ZonedDateTime zdtHK = ZonedDateTime.of(ldtHK, zoneHK);
+Instant instant2 = zdtHK.toInstant();
+System.out.println(instant2.getEpochSecond());
+System.out.println();
+
+ZoneId zoneNY = ZoneId.of("America/New_York");
+ZonedDateTime zdt11 = ZonedDateTime.of(2017, 3, 11, 0, 0, 0, 0, zoneNY);
+ZonedDateTime zdt12 = ZonedDateTime.of(2017, 3, 12, 0, 0, 0, 0, zoneNY);
+ZonedDateTime zdt13 = ZonedDateTime.of(2017, 3, 13, 0, 0, 0, 0, zoneNY);
+
+Duration d1 = Duration.between(zdt11,zdt12);
+System.out.println(d1);
+Duration d2 = Duration.between(zdt13,zdt12);
+System.out.println(d2);
+Duration d3 = Duration.ofMinutes(20);
+System.out.println(zdt11.plus(d3));
+Duration d4 = d3.plusSeconds(20);
+System.out.println(zdt11.plus(d4));
+System.out.println();
+
+Period p1 = Period.between(zdt11.toLocalDate(),zdt12.toLocalDate());
+System.out.println(p1);
+Period p2 = Period.ofDays(1);
+System.out.println(zdt12.plus(p2));
+System.out.println();
+
+System.out.println(zdt11.plus(1, ChronoUnit.DECADES));
+System.out.println(ChronoUnit.DAYS.isSupportedBy(zdt11));
+System.out.println(ChronoUnit.HOURS.isSupportedBy(zdt11.toLocalDate()));        
+System.out.println(ChronoUnit.HOURS.between(zdt11,zdt13)); 
+
+
+//************ Other Setup ***************
+
+import java.time.*;
+import java.time.temporal.*;

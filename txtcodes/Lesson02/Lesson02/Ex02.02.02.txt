@@ -1,0 +1,18 @@
+//************ Class(es) ***************
+
+class Car {
+    int speed;
+    void accelerate(int i) {
+        assert(i > 0): "parameter passed is NOT positive : " + i;
+        speed = speed + 10 * i;
+        System.out.println("Speed is now : " + speed);
+    }
+}
+
+//************ Main Method ***************
+
+int i = Integer.parseInt(args[0]);
+assert(i >= 0): "i is negative with value " + i;
+Car mycar= new Car();
+mycar.accelerate(i);
+

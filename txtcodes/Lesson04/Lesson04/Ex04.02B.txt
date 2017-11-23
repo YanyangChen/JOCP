@@ -1,0 +1,26 @@
+//************ Class(es) ***************
+
+class Cal extends Thread {
+    char id;
+    int number;
+    Cal(char id, int number) {
+        this.id = id;
+        this.number = number;
+    }
+    public void run() {
+        long sum=0;
+        for (int i=1;i<number;i++) {
+            sum = sum + i;
+        }
+        System.out.println("The value of " + id + " is " + sum);
+    }
+}
+
+
+//************ Main Method ***************
+
+new Cal('x', 100000000).start();
+new Cal('y', 100).start();
+
+//************ Other Setup ***************
+

@@ -1,0 +1,53 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Path realPath = Paths.get("C:/javaex/file1.txt");   // an exsiting file
+Path falsePath = Paths.get("C:/aaa/bbb/ccc.java");  // a non-existing file
+
+System.out.println("Real Path exists ? " + Files.exists(realPath));
+System.out.println("False Path exists ? " + Files.exists(falsePath));
+System.out.println();
+System.out.println("Information about the Real Path :-");
+System.out.println("Is a regular file ? " + Files.isRegularFile(realPath));
+System.out.println("Is a directory ? " + Files.isDirectory(realPath));
+System.out.println("Size : " + Files.size(realPath));
+System.out.println("Owner : " + Files.getOwner(realPath));
+System.out.println();
+
+System.out.println("Contents of the Real Path :-");
+java.util.List<String> content = Files.readAllLines(realPath);
+for (String s : content) {
+    System.out.println(s);
+}
+System.out.println("****** End of File *****");
+System.out.println();
+
+Path targetPath = Paths.get("C:/javaex/filesA.txt");
+//Files.deleteIfExists(targetPath);
+Files.copy(realPath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+System.out.println("Copied file :-");
+System.out.println("Size : " + Files.size(targetPath));
+System.out.println();
+
+Path appPath = Paths.get(".").toRealPath();
+System.out.println("This app: " + appPath);
+Path targetRelativeToApp = appPath.relativize(targetPath);
+System.out.println("Copied file relative to this app: " +
+                         targetRelativeToApp);
+System.out.println("Copied file's path equals to above relative path: "  +
+                         targetPath.equals(targetRelativeToApp));
+System.out.println("Copied file same file as the above relative path: "  +
+                         Files.isSameFile(targetPath,targetRelativeToApp));
+
+
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;
+
+throws java.io.IOException

@@ -1,0 +1,62 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Locale[] locales = new Locale[4];
+locales[0] = new Locale("zh", "HK");
+locales[1] = new Locale("ja", "JP");
+locales[2] = new Locale("en", "GB");
+locales[3] = new Locale("de", "DE");
+
+double amt = -123456.78;
+
+for (Locale locale : locales) {
+    System.out.println(locale.toString() + " : ");
+    NumberFormat nf = NumberFormat.getNumberInstance(locale);
+    String amtString = nf.format(amt);
+    System.out.println("Number Format : " + amtString);
+
+    NumberFormat cf = NumberFormat.getCurrencyInstance(locale);
+    String amtCurrency = cf.format(amt);
+    System.out.println("Currency Format : " + amtCurrency);
+    
+    NumberFormat pf = NumberFormat.getPercentInstance(locale);
+    String amtPercent = pf.format(amt);
+    System.out.println("Perent Format : " + amtPercent);
+    System.out.println();
+} 
+
+System.out.println("\n***********\n");
+
+System.out.println("My default is " + Locale.getDefault() + " : ");
+NumberFormat nf = NumberFormat.getNumberInstance();
+String amtString = nf.format(amt);
+System.out.println("Number Format : " + amtString);
+
+NumberFormat cf = NumberFormat.getCurrencyInstance();
+String amtCurrency = cf.format(amt);
+System.out.println("Currency Format : " + amtCurrency);
+
+NumberFormat pf = NumberFormat.getPercentInstance();
+String amtPercent = pf.format(amt);
+System.out.println("Perent Format : " + amtPercent);
+
+System.out.println("\n***********\n");
+
+DecimalFormatSymbols s = new DecimalFormatSymbols();
+s.setDecimalSeparator('');
+s.setGroupingSeparator('');
+
+DecimalFormat myDF = new DecimalFormat("#,#00.0##",s);
+myDF.setGroupingSize(4);
+System.out.println(myDF.format(-123456.78));
+System.out.println(myDF.format(1));
+
+        
+
+//************ Other Setup ***************
+
+import java.util.*;
+import java.text.*;

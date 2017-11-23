@@ -1,0 +1,55 @@
+//************ Class(es) ***************
+
+class Simulation {
+    static int testRun;
+    static int part1Error;
+    static int part2Error;
+    static int part3Error;
+    static int successRun;
+    int intValue;
+    Simulation(int i) {
+        intValue = i;
+    }
+    void doTest() {
+        testRun++;
+        try {
+            int i = 10/intValue;
+        } catch (ArithmeticException ex) {
+            part1Error++;
+            throw new ArithmeticException();
+        }
+        try {
+            int[] i = {1,2,3,4};
+            int j = i[intValue];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            part2Error++;
+            throw new ArrayIndexOutOfBoundsException(ex.getMessage());
+        }
+        try {
+            int i = 10/(intValue - 3);
+        } catch (ArithmeticException ex) {
+            part3Error++;
+            throw ex;
+        }
+        successRun++;
+    }
+}
+
+//************ Main Method ***************
+
+for (int i=0;i<=5;i++) {
+    Simulation s = new Simulation(i);
+    try {
+        s.doTest();
+        System.out.println("Test " + i + " runs succesfully");
+    } catch (ArithmeticException|ArrayIndexOutOfBoundsException ex ) {
+        System.out.println("Test " + i + " aborted due to " + ex);
+    }
+}
+System.out.println();
+System.out.println("** Simulation Statistics **");
+System.out.println("Test run : " + Simulation.testRun);
+System.out.println("Part1 fails : " + Simulation.part1Error);
+System.out.println("Part2 fails : " + Simulation.part2Error);
+System.out.println("Part3 fails : " + Simulation.part3Error);
+System.out.println("Success : " + Simulation.successRun);

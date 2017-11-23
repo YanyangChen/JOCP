@@ -1,0 +1,70 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+/* reseting the database
+try (Connection con = DriverManager.getConnection(
+                         "jdbc:derby://localhost:1527/sample","app","app");
+      Statement stmt = con.createStatement();) {
+
+    DatabaseMetaData dbm = con.getMetaData();
+    ResultSet tables = dbm.getTables(null, null, "STAFF", null);
+    while (tables.next()) {
+        stmt.executeUpdate("DROP TABLE Staff");
+    }
+
+    stmt.executeUpdate("CREATE TABLE Staff"
+        + "(ID integer,Name varchar(20), Salary integer)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(1, 'Peter', 10000)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(2, 'John', 15000)");
+    stmt.executeUpdate("INSERT INTO Staff VALUES(3, 'Vincent', 20000)");
+    stmt.executeUpdate("UPDATE Staff SET Salary=Salary+5000 "
+            + "WHERE Name = 'Vincent'");
+} catch (SQLException ex) { 
+        System.out.println("SQLException occurs : " + ex.getMessage());
+}
+*/
+
+try (Connection con = DriverManager.getConnection(
+                         "jdbc:derby://localhost:1527/sample","app","app");
+      Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                                           ResultSet.CONCUR_UPDATABLE);) {
+    ResultSet rs = stmt.executeQuery("SELECT * FROM Staff");
+    System.out.println("Before update");
+    int minrow = 0;
+    int minsalary = 999999;
+    while (rs.next()) {
+        String name = rs.getString("Name");
+        int salary = rs.getInt("Salary");
+        System.out.println(name + " : " + salary);
+        if (name.equals("Vincent")) {
+            rs.updateInt("Salary", salary+1);
+            rs.updateRow();
+        }
+        if (salary < minsalary) {
+            minsalary = salary;
+            minrow = rs.getRow();
+        }
+    }
+    if (minrow > 0) {
+        rs.absolute(minrow);
+        rs.updateInt("Salary", rs.getInt("Salary")+100);
+        rs.updateRow();        
+    }
+    System.out.println("\nAfter update:");
+    rs.afterLast();
+    while (rs.previous()) {
+        String name = rs.getString("Name");
+        int salary = rs.getInt("Salary");
+        System.out.println(name + " : " + salary);
+    }
+} catch (SQLException ex) { 
+        System.out.println("SQLException occurs : " + ex.getMessage());
+}
+
+
+//************ Other Setup ***************
+
+import java.sql.*;

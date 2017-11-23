@@ -1,0 +1,26 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+ArrayDeque<String> myqueue = new ArrayDeque<String>();
+
+myqueue.addLast("Vincent");
+myqueue.addLast("Peter");
+myqueue.addLast("Tom");
+myqueue.addFirst("Sunny");
+        
+System.out.print("Items in queue : ");
+System.out.println(myqueue);
+
+System.out.println("Peek : " + myqueue.peekLast() );
+System.out.println("Polling : " + myqueue.pollFirst());
+System.out.println("Polling : " + myqueue.pollFirst());
+System.out.println("Polling : " + myqueue.pollFirst());
+System.out.println("Polling : " + myqueue.pollFirst());
+
+
+//************ Other Setup ***************
+
+import java.util.*;

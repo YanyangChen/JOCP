@@ -1,0 +1,45 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+System.out.println("p7.equals(p8):");
+Path p7 = Paths.get("C:\\javaex\\file1.txt");
+Path p8 = Paths.get("C:\\javaex\\..\\javaex\\file1.txt");
+System.out.println(p7);
+System.out.println(p8);
+System.out.println(p7.equals(p8));
+System.out.println();
+System.out.println("p7Abs.equals(p8Abs):");
+Path p7Abs = p7.toAbsolutePath();
+Path p8Abs = p8.toAbsolutePath();
+System.out.println(p7Abs);
+System.out.println(p8Abs);
+System.out.println(p7Abs.equals(p8Abs));
+System.out.println();
+System.out.println("p7Real.equals(p8Real):");
+try {
+    Path p7Real = p7.toRealPath();
+    Path p8Real = p8.toRealPath();
+    System.out.println(p7Real);
+    System.out.println(p8Real);
+    System.out.println(p7Real.equals(p8Real));
+} catch (java.io.IOException ex) {
+    System.out.println(ex);
+}
+System.out.println();
+System.out.println("p7Nor.equals(p8Nor):");
+Path p7Nor = p7.normalize();
+Path p8Nor = p8.normalize();
+System.out.println(p7Nor);
+System.out.println(p8Nor);
+System.out.println(p7Nor.equals(p8Nor));
+System.out.println();
+System.out.println("Use both Abs and Nor:");
+System.out.println(p7.toAbsolutePath().normalize().equals(p8.toAbsolutePath().normalize()));
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;

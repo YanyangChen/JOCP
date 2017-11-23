@@ -1,0 +1,68 @@
+//************ Class(es) ***************
+
+class Car {
+    String licenseNo;
+    Car(String s) {
+        licenseNo = s;
+    }
+    public String toString() {
+        return licenseNo;
+    }
+}
+
+
+//************ Main Method ***************
+
+Car car2 = new Car("1111");
+Car car3 = null;
+Car car4 = new Car("3333");
+        
+Optional<Car> o1 = Optional.empty();
+Optional<Car> o2 = Optional.of(car2);           // must be non-null.
+Optional<Car> o3 = Optional.ofNullable(car3);   // null OK.
+Optional<Car> o4 = Optional.ofNullable(car4);   // non-null OK.
+
+Hashtable<String, Optional<Car>> map1 = new Hashtable<>();
+map1.put("Vincent",o1);
+map1.put("Peter",o2);
+map1.put("Tom",o3);
+map1.put("Paul",o4);
+//map1.put("Mary",null);  // cause runtime NullPointerException
+
+System.out.println("Sales person car assignment");
+for (String key : map1.keySet()) {
+    Optional<Car> o = map1.get(key);
+    try {
+        System.out.println(key + " -> " + o.get());
+    } catch (NoSuchElementException ex) {
+        System.out.println(key + " -> no car");        
+    }
+}
+
+System.out.println("\nSales person that has car");
+for (String key : map1.keySet()) {
+    Optional<Car> o = map1.get(key);
+    if (o.isPresent()) {
+        System.out.println(key + " -> " + o.get());
+    }
+}
+
+Car sharedcar = new Car("9999");   // company shared car
+System.out.println("\nCar that a Sales person can use");
+for (String key : map1.keySet()) {
+    Optional<Car> o = map1.get(key);
+    System.out.println(key + " -> " + o.orElse(sharedcar));
+}
+
+System.out.println();
+Optional<Car> oo = Optional.of(car4);
+boolean sameobject = (oo == o4);
+System.out.println("oo == o4 : " + sameobject);
+boolean equals = (oo.equals(o4));
+System.out.println("oo.equals(o4) : " + equals);
+
+
+//************ Other Setup ***************
+
+
+import java.util.*;

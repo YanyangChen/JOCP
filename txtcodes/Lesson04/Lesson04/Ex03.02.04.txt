@@ -1,0 +1,32 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+for (FileStore s : FileSystems.getDefault().getFileStores()) {
+    System.out.println("Store : " + s);
+    System.out.println("Store Type : " + s.type());
+    try {
+        System.out.println("Total Space : " + s.getTotalSpace());
+        System.out.println("Usable Space : " + s.getUsableSpace());
+    } catch (java.io.IOException e) {}
+    System.out.println("Supports DOS Attributes ? " +
+                             s.supportsFileAttributeView("dos"));
+    System.out.println("Supports POSIX Attributes ? " +
+                             s.supportsFileAttributeView("posix"));
+    System.out.println();
+}
+System.out.println();
+Path myPath = Paths.get("C:/javaex/file1.txt");
+FileStore store = null;
+try {
+    store= Files.getFileStore(myPath);
+} catch (java.io.IOException e) {}
+System.out.println("myPath is in : " + store);
+System.out.println();
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;

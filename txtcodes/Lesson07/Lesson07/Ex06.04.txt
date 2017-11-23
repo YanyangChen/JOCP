@@ -1,0 +1,117 @@
+//************ Class(es) ***************
+
+class TrafficSimulation extends ArrayList<Vehicle> {
+    void brakeIf(Predicate<Vehicle> p) {
+        final ListIterator<Vehicle> li = this.listIterator();
+        while (li.hasNext()) {
+            Vehicle v = li.next();
+            if (p.test(v)) {
+                v.brake();
+            }
+        }
+    }
+    void printValue(ToIntFunction<Vehicle> t) {
+        final ListIterator<Vehicle> li = this.listIterator();
+        while (li.hasNext()) {
+            Vehicle v = li.next();
+            System.out.print(v.licenseNo + ":" + t.applyAsInt(v) + "  ");
+        }
+        System.out.println();
+    }
+    void printString(Function<Vehicle, String> f) {
+        final ListIterator<Vehicle> li = this.listIterator();
+        while (li.hasNext()) {
+            Vehicle v = li.next();
+            System.out.print(v.licenseNo + ":" + f.apply(v) + "  ");
+        }
+        System.out.println();
+    }
+}
+
+
+abstract class Vehicle {
+    String licenseNo;
+    int speed;
+    int produceYear;
+    Vehicle(String s, int year) {
+        licenseNo = s;
+        produceYear = year;
+    }
+    abstract void accelerate();
+    void brake() {
+        speed = speed - 10;
+    }
+    public String toString() {
+        return licenseNo;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public int getProduceYear() {
+        return produceYear;
+    }
+}
+
+class Bus extends Vehicle {
+    Bus(String s, int year) {
+        super(s,year);
+    }
+    void accelerate() {
+        speed = speed + 10;
+    }
+}
+
+class Car extends Vehicle {
+    Car(String s, int year) {
+        super(s,year);
+    }
+    void accelerate() {
+        speed = speed + 15;
+    }
+}
+
+class RacingCar extends Car {
+    RacingCar(String s, int year) {
+        super(s,year);
+    }
+    void accelerate() {
+        speed = speed + 20;
+    }
+}
+
+
+//************ Main Method ***************
+
+TrafficSimulation t = new TrafficSimulation();
+t.add(new Bus("B1111", 2000));
+t.add(new Car("C2222", 2010));
+t.add(new RacingCar("R3333", 2016));
+t.add(new Car("C4444", 2014));
+for (int i=0;i<4;i++) {
+    t.forEach(v -> v.accelerate());
+}
+System.out.println(t);
+t.forEach(v -> System.out.print(v.licenseNo+":"+v.speed+"  "));
+System.out.println();
+System.out.println();
+
+t.brakeIf(v -> v.getSpeed() >= 80);
+t.printValue(v -> v.getSpeed());
+System.out.println();
+
+t.brakeIf(v -> v instanceof Bus);
+t.printValue(v -> v.getSpeed());
+System.out.println();
+
+t.printValue(v -> v.getProduceYear());
+System.out.println();
+
+t.printString(v -> v.getProduceYear()+","+v.getSpeed());
+//t.printString(v -> Math.round(v.getSpeed()*0.62)+"("+v.getProduceYear()+")");
+
+
+//************ Other Setup ***************
+
+
+import java.util.*;
+import java.util.function.*;

@@ -1,0 +1,101 @@
+//************ Step 2 ***************
+
+import java.util.*;
+import java.util.concurrent.*;
+
+
+//************ Step 3 ***************
+
+class MyList {
+    static ArrayList<Character> list = new ArrayList<>();
+    public static void addItem() {
+        list.add('a');
+    }
+    public static int[] iterateItem() {
+        int counter = 0;
+        int size1 = 0;
+        int size2 = 0;
+        for (char c : list) {
+            if (counter == 0) {
+                size1 = list.size();
+            }
+            if (counter == 9999) {
+                size2 = list.size();
+            }
+            counter++;
+        }
+        return new int[] { counter, size1, size2 };
+    }
+}
+
+class Worker implements Runnable {
+    static Object obj1 = new Object ();
+    Object obj2 = new Object ();
+    public void run() {
+        for (int i=0; i<10000;i++) {
+            MyList.addItem();
+        }
+    }
+}
+
+//************ Step 4 ***************
+
+Thread t = new Thread(new Worker());
+t.start(); 
+try {
+    t.join();
+} catch (InterruptedException ex) { 
+    System.out.println(ex);
+}
+t = new Thread(new Worker());
+t.start();
+int[] result = MyList.iterateItem();
+try {
+    t.join();
+} catch (InterruptedException ex) { 
+    System.out.println(ex);
+}
+System.out.println("Item Size at iteration 0 : " + result[1]);
+System.out.println("Item Size at iteration 9999 : " + result[2]);
+System.out.println("Item Count from iteration : " + result[0]);
+System.out.println("Item Size after t2 : " + MyList.list.size());
+
+
+/**
+System.out.println("\n**************\n");
+Thread t1 = new Thread(new Worker());
+Thread t2 = new Thread(new Worker());
+t1.start(); 
+t2.start();
+try {
+    t1.join();
+    t2.join();
+} catch (InterruptedException ex) { 
+    System.out.println(ex);
+}
+System.out.println("Total number of items : " + MyList.list.size());
+**/
+
+//************ Step 6 ***************
+
+class MyList {
+    static CopyOnWriteArrayList<Character> list = new CopyOnWriteArrayList<Character>();
+    public static void addItem() {
+        list.add('a');
+    }
+    public static int[] iterateItem() {
+        int counter = 0;
+        int size1 = 0;
+        int size2 = 0;
+        for (char c : list) {
+            if (counter == 0) {
+                size1 = list.size();
+            }
+            if (counter == 9999) {
+                size2 = list.size();
+            }
+            counter++;
+        }
+        return new int[] { counter, size1, size2 };
+    }
+}

@@ -1,0 +1,44 @@
+//************ Class(es) ***************
+
+class CarTest {
+    private String name;
+    CarTest(String s) {
+        name = s;
+    }
+    void doTest() {
+        class TestCar {
+            static final double km2mile = 0.62137;
+            private int speed;
+            void accelerate() {
+                speed = speed + 11;
+            }
+        };
+        TestCar c = new TestCar();
+        c.accelerate();
+        System.out.println("Speed for " + name + " : " + c.speed);
+    }
+    void method2() {
+        // TestCar cc = new TestCar();  // Comilation error
+    }
+    static void doTest2() {
+        class TestCar {
+            static final double km2mile = 0.62137;
+            private int speed;
+            void accelerate() {
+                speed = speed + 12;
+            }
+        };
+        TestCar c = new TestCar();
+        c.accelerate();
+        System.out.println("Speed Test : " + c.speed);
+    }    
+}
+
+
+
+
+//************ Main Method ***************
+
+CarTest t = new CarTest("Test20160101");
+t.doTest();
+CarTest.doTest2();

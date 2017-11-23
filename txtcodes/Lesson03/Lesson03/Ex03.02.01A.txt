@@ -1,0 +1,38 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Path p1 = Paths.get("C:\\javaex\\file1.txt");
+Path p2 = Paths.get("C:/javaex");
+p2 = FileSystems.getDefault().getPath("C:/javaex");          // same as above
+Path p3 = Paths.get(".");                                    // relative path
+Path p4 = Paths.get("build/classes");                        // relative path
+Path p34 = p3.resolve(p4);				     //appending p4 to p3
+Path pNotExist = Paths.get("C:\\javaex\\nostexist.txt");
+Path[] parray = {p1,p2,p3,p4,p34,pNotExist};
+for (Path p : parray) {
+    System.out.println("toString() : " + p.toString());
+    System.out.println("getFileName() : " + p.getFileName());
+    System.out.println("getName(0) : " + p.getName(0));
+    System.out.println("getNameCount() : " + p.getNameCount());
+    System.out.println("subpath(0,1) : " + p.subpath(0,1));
+    System.out.println("getParent() : " + p.getParent());
+    System.out.println("getRoot() : " + p.getRoot());
+    System.out.println("toAbsolutePath() : " + p.toAbsolutePath());
+    try {
+        System.out.println("toRealPath() : " + p.toRealPath());
+    } catch (NoSuchFileException e) {              // optional
+        System.err.println(p + " toRealPath(): No such file or directory.");
+    } catch (java.io.IOException e) {
+        System.err.println(p + " toRealPath(): IO Error.");
+    }
+    System.out.println();
+}
+System.out.println("p1 is : " + p1);
+System.out.println("pNotExist is : " + pNotExist);
+
+//************ Other Setup ***************
+
+import java.nio.file.*;

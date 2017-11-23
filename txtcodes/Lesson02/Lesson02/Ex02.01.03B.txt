@@ -1,0 +1,30 @@
+//************ Class(es) ***************
+
+class CarCrashException extends RuntimeException {
+    CarCrashException(String s) {
+        super(s);
+    }
+}
+
+class Car { 
+    int speed;
+    void accelerate() {
+        speed = speed + 20;
+        if (speed > 60) {
+            throw new CarCrashException("Speed is " + speed);
+        }
+    }
+}
+
+
+//************ Main Method ***************
+
+Car car = new Car();
+try {
+    car.accelerate();
+    car.accelerate();
+    car.accelerate();
+    car.accelerate();
+} catch (CarCrashException ex) {
+    System.out.println(ex.getMessage());
+}

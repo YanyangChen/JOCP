@@ -1,0 +1,52 @@
+//************ Class(es) ***************
+
+class Cal1 implements Runnable {
+    String id;
+    int number;
+    Cal1(String id, int number) {
+        this.id = id;
+        this.number = number;
+    }
+    public void start() {
+        Thread objThread = new Thread(this);
+        objThread.start();        
+    }
+    public void run() {
+        long sum=0;
+        for (int i=1;i<number;i++) {
+            sum = sum + i;
+        }
+        System.out.println("The value of " + id + " is " + sum);
+    }
+}
+
+class Cal2 implements Runnable {
+    String id;
+    int number;
+    Cal2(String id, int number) {
+        this.id = id;
+        this.number = number;
+        new Thread(this).start();
+    }
+    public void run() {
+        long sum=0;
+        for (int i=1;i<number;i++) {
+            sum = sum + i;
+        }
+        System.out.println("The value of " + id + " is " + sum);
+    }
+}
+
+
+
+//************ Main Method ***************
+
+new Thread(new Cal1("x1",100000000)).start();
+new Thread(new Cal1("y1",100)).start();
+new Cal1("x2",100000000).start();
+new Cal1("y2",100).start();
+new Cal2("x3",100000000);
+new Cal2("y3",100);
+
+//************ Other Setup ***************
+

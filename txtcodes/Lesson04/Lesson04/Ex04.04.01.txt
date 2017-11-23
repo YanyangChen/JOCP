@@ -1,0 +1,74 @@
+//************ Step 2 ***************
+
+public class JavaApplication1 extends Thread {
+    public void run() {
+        System.out.println("Running in " + this.getName());
+    }
+
+    public static void main(String[] args) {
+        new JavaApplication1().start(); 
+        new JavaApplication1().start(); 	
+        System.out.println("Running in " + currentThread().getName());
+    }
+}
+
+
+//************ Step 4 ***************
+
+public class JavaApplication1 extends Thread {
+    public void run() {
+        System.out.println("Running in "+currentThread().getName());
+    }
+
+    JavaApplication1() {
+    }
+
+    JavaApplication1(String s) {
+        super(s);
+    }
+
+    public static void main(String[] args) {
+        new JavaApplication1("Red").start(); 
+        Thread t = new JavaApplication1();
+        t.setName("Blue");
+        t.start();
+        currentThread().setName("JavaApp1");
+        System.out.println("Running in "+currentThread().getName());
+    }
+}
+
+
+//************ Step 6 ***************
+
+public class JavaApplication1 implements Runnable {
+    public void run() {
+        System.out.println("Running in "+Thread.currentThread().getName());
+    }
+
+    public void start(String s) {
+        Thread objThread = new Thread(this, s);
+        objThread.start();        
+    }
+
+    public static void main(String[] args) {
+        new Thread(new JavaApplication1(),"Red").start(); 
+        new JavaApplication1().start("Blue");
+        Thread.currentThread().setName("JavaApp1");
+        System.out.println("Running in "+Thread.currentThread().getName()); 
+   }
+}
+
+//************ Remarks ***************
+
+public class JavaApplication1 extends Thread {
+    public void run() {
+        System.out.println("Running in "+currentThread().getName());
+    }
+
+    public static void main(String[] args) {
+        new Thread(new JavaApplication1()).start(); 
+        new Thread(new JavaApplication1()).start(); 
+        System.out.println("Running in "+currentThread().getName()); 
+   }
+}
+

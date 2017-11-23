@@ -1,0 +1,31 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+TreeMap<String,Integer> mymap = new TreeMap<String,Integer>();
+mymap.put("Vincent",20000);
+mymap.put("Peter",15000);
+mymap.put("Tom",30000);
+
+for (String key : mymap.keySet()) {
+    System.out.println(key + " -> " + mymap.get(key));
+}
+System.out.println("Entries in map : " + mymap);  
+
+System.out.println("\n*************\n");
+Set<String> view1 = mymap.keySet();
+Set<Map.Entry<String, Integer>> view2 = mymap.entrySet();
+Collection<Integer> view3 = mymap.values();
+System.out.println(view1);
+System.out.println(view2);
+System.out.println(view3);
+view1.remove("Tom");
+System.out.println("Entries in map : " + mymap);  
+
+
+
+//************ Other Setup ***************
+
+import java.util.*;

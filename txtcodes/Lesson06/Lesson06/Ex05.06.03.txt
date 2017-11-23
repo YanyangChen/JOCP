@@ -1,0 +1,69 @@
+//************ Class(es) ***************
+
+class Test {
+    static void method1(Box b) {
+    }
+    static void method2(Box<Car> b) {
+    }
+    static void method3(Box<? extends Car> b) {
+        b.get().accelerate();
+    }
+    static void method4(Box<? super Car> b) {
+        Car c = new Car();
+        b.set(c);
+    }
+}
+
+class Box<T> {                           // T stands for "Type"
+    private T t;                   
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+}
+
+class Vehicle { }
+class Car extends Vehicle {
+    int speed;
+    void accelerate() {
+        speed = speed + 10;
+    }
+}
+class RacingCar extends Car { }
+
+//************ Main Method ***************
+
+Box b = new Box();
+Box<Vehicle> bv = new Box<>();
+Box<Car> bc = new Box<>();
+Box<RacingCar> brc = new Box<>();
+b.set(new Vehicle());
+bv.set(new Vehicle());
+bc.set(new Car());
+brc.set(new RacingCar());
+
+Test.method1(b);
+Test.method1(bv);
+Test.method1(bc);
+Test.method1(brc);
+Test.method2(b);
+//Test.method2(bv);  // Error! Not Box for Car
+Test.method2(bc);
+//Test.method2(brc);  // Error! Not Box for Car
+Test.method3(b);     // Cause RuntimeException when running
+//Test.method3(bv);  // Error! Not Car or its subclass
+Test.method3(bc);
+Test.method3(brc);
+Test.method4(b);
+Test.method4(bv);
+Test.method4(bc);
+//Test.method4(brc);  // Error! Not Car or its superclass
+
+
+//************ Other Setup ***************
+
+

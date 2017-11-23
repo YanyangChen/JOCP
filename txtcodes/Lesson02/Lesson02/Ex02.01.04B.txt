@@ -1,0 +1,57 @@
+//************ Class(es) ***************
+
+class SimulationNormalException extends RuntimeException {
+    SimulationNormalException() {
+    }
+    SimulationNormalException(Throwable t) {
+        super(t);
+    }
+}
+
+class Simulation {
+    static int testRun;
+    static int part1Error;
+    static int part2Error;
+    static int part3Error;
+    static int successRun;
+    int intValue;
+    Simulation(int i) {
+        intValue = i;
+    }
+    void doTest() {
+        testRun++;
+        try {
+            int i = 10/intValue;
+        } catch (ArithmeticException ex) {
+            part1Error++;
+            throw new SimulationNormalException();
+        }
+        try {
+            int i = 10/(intValue - 4);
+        } catch (ArithmeticException ex) {
+            part2Error++;
+            throw ex;
+        }
+        try {
+            int[] i = {1,2};
+            int j = i[intValue];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            part3Error++;
+            throw new SimulationNormalException(ex);
+        }
+        successRun++;
+    }
+}
+
+//************ Main Method ***************
+
+for (int i=0;i<=5;i++) {
+    Simulation s = new Simulation(i);
+    try {
+        s.doTest();
+        System.out.println("Test " + i + " runs succesfully");
+    } catch (SimulationNormalException ex ) {
+        System.out.println("Test " + i + " aborted due to " + ex);
+        System.out.println("       Caused by : " + ex.getCause());
+    }
+}

@@ -1,0 +1,36 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Path pathA = Paths.get("C:/javaex/src");
+Path pathB = Paths.get("C:/javaex/classes");
+Path pathC = pathA.relativize(pathB);
+System.out.println("Path A is : " + pathA);
+System.out.println("Path B is : " + pathB);
+System.out.println("Relative Path is : " + pathC);
+System.out.println("URI of the above is : " +
+                        pathA.resolve(pathC).normalize().toUri());
+System.out.println();
+
+String startStr = "C:\\";
+System.out.println("Is starting with " + startStr + " : ");
+System.out.println("pathA : " + pathA.startsWith(startStr));
+System.out.println("pathB : " + pathB.startsWith(startStr));
+System.out.println("pathC : " + pathC.startsWith(startStr));
+System.out.println();
+
+String endStr = "classes";
+System.out.println("Is ending with " + endStr + " : ");
+System.out.println("pathA : " + pathA.endsWith(endStr));
+System.out.println("pathB : " + pathB.endsWith(endStr));
+System.out.println("pathC : " + pathC.endsWith(endStr));
+System.out.println();
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;
+
+// Create the two directories first.

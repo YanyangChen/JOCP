@@ -1,0 +1,44 @@
+//************ Class(es) ***************
+
+class Car {
+    int speed;
+    void accelerate() {
+        speed = speed + 10;
+    }
+}
+
+class CarTest {
+    void doTest1() {
+        for (int i=1;i<=5;i++) {
+            int accelerateRate = (int) (Math.random() * 10 + 10);
+            Car testcar = new Car() {
+                void accelerate() {
+                    speed = speed + accelerateRate;
+                }
+            };
+            testcar.accelerate();
+            testcar.accelerate();
+            System.out.print("Car " + i + " with rate " + accelerateRate);
+            System.out.println(" : " + testcar.speed);
+        }
+    }
+    static void doTest2(int accelerateRate) {
+        Car testcar = new Car() {
+            void accelerate() {
+                speed = speed + accelerateRate;
+            }
+        };
+        testcar.accelerate();
+        System.out.println(testcar.speed);
+    }    
+}
+
+
+
+
+
+//************ Main Method ***************
+
+CarTest t = new CarTest();
+t.doTest1();
+CarTest.doTest2(15);

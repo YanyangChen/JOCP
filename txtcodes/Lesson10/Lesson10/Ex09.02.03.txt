@@ -1,0 +1,47 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+ArrayList<Locale> locales = new ArrayList<>();
+locales.add(new Locale("zh", "HK"));
+locales.add(new Locale("ja", "JP"));
+locales.add(new Locale("en", "GB"));
+locales.add(new Locale("de", "DE"));
+for (Locale locale : locales) {
+    //System.out.println(java.nio.file.Paths.get(".").toAbsolutePath());
+    String filename = null;
+    Path path = Paths.get("build\\classes\\javaapplication1\\Greetings_" + 
+                          locale.toString() + ".properties");
+    if (Files.exists(path)) {
+        filename = path.toString();
+    } else {
+        path = Paths.get("build\\classes\\javaapplication1\\Greetings_" + 
+                         locale.getLanguage() + ".properties");
+        if (Files.exists(path)) {
+            filename = path.toString();
+        }            
+    }
+    if (filename != null) {
+        try (FileReader reader = new FileReader(filename)) {
+            Properties prop = new Properties(); 
+            prop.load(reader);
+            System.out.println(locale.getDisplayName() + ":");
+            System.out.println(prop.getProperty("morning"));
+            System.out.println(prop.getProperty("afternoon"));
+            System.out.println(prop.getProperty("night"));
+            System.out.println();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+}
+
+//************ Other Setup ***************
+
+import java.util.*;
+import java.io.*;
+import java.nio.file.*;
+
+// copy the files for Greetings

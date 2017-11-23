@@ -1,0 +1,66 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Path myPath = Paths.get("C:/javaex/file1.txt");
+System.out.println("Accessing Single Attribute:");
+System.out.println("Creation : " +
+                        Files.getAttribute(myPath, "creationTime"));
+System.out.println("ReadOnly : " + 
+                        Files.getAttribute(myPath, "dos:readonly"));
+System.out.println();
+
+System.out.println("BasicFileAttributes:");
+BasicFileAttributes battr = Files.readAttributes(myPath,
+                                  BasicFileAttributes.class);
+System.out.println("creationTime: " + battr.creationTime());
+System.out.println("lastAccessTime: " + battr.lastAccessTime());
+System.out.println("lastModifiedTime: " + battr.lastModifiedTime());
+System.out.println("isDirectory: " + battr.isDirectory());
+System.out.println("isOther: " + battr.isOther());
+System.out.println("isRegularFile: " + battr.isRegularFile());
+System.out.println("isSymbolicLink: " + battr.isSymbolicLink());
+System.out.println("size: " + battr.size());
+System.out.println();
+
+System.out.println("DOS attributes:");
+DosFileAttributes dattr = Files.readAttributes(myPath,
+                               DosFileAttributes.class);
+System.out.println("isReadOnly is " + dattr.isReadOnly());
+System.out.println("isHidden is " + dattr.isHidden());
+System.out.println("isArchive is " + dattr.isArchive());
+System.out.println("isSystem is " + dattr.isSystem());
+System.out.println();
+
+System.out.println("Checking after setting a file to readonly:");
+Path newPath = Paths.get("C:/javaex/filesB.txt");
+if (! Files.exists(newPath)) {
+    Files.createFile(newPath); 
+}
+Files.setAttribute(newPath, "dos:readonly",true);
+System.out.println("ReadOnly : " + 
+                   Files.getAttribute(newPath, "dos:readonly"));
+DosFileAttributes newfiledattr = Files.readAttributes(newPath,
+                               DosFileAttributes.class);
+System.out.println("isReadOnly is " + newfiledattr.isReadOnly());
+System.out.println();
+
+// coding from remarks
+System.out.println("Modifying attributes through view:");
+DosFileAttributeView dattrView = Files.getFileAttributeView(newPath,
+                                     DosFileAttributeView.class);
+DosFileAttributes dattr2 = dattrView.readAttributes();
+System.out.println("Check ReadOnly via View : " + dattr2.isReadOnly());
+dattrView.setReadOnly(false);   // modify through view
+System.out.println("Check ReadOnly via Path after changed : " + 
+                        Files.getAttribute(myPath, "dos:readonly"));
+
+
+//************ Other Setup ***************
+
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+
+throws java.io.IOException

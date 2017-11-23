@@ -1,0 +1,46 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Locale[] locales = new Locale[4];
+locales[0] = new Locale("zh", "HK");
+locales[1] = new Locale("ja", "JP");
+locales[2] = new Locale("en", "GB");
+locales[3] = new Locale("de");
+
+for (Locale locale : locales) {
+    System.out.println(locale.getDisplayName() + ":");
+
+    ResourceBundle shop = ResourceBundle.getBundle(
+                                  "javaapplication1.ShopData", locale); 
+
+    
+    GregorianCalendar open = (GregorianCalendar) shop.getObject("open");
+    GregorianCalendar close = (GregorianCalendar) shop.getObject("close");
+    String telephone = (String) shop.getObject("telephone");
+  
+    Date openTime = open.getTime();
+    Date closeTime = close.getTime();
+   
+    long openMilliTime = openTime.getTime();
+    long closeMilliTime = closeTime.getTime();
+    double totalHours = (closeMilliTime - openMilliTime) / (1000 * 60 * 60);
+        
+    DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM);
+    
+    System.out.printf("%15s : %s%n","Opening", time.format(openTime));
+    System.out.printf("%15s : %s%n","Closing", time.format(closeTime));    
+    System.out.printf("%15s : %04.01f%n","Total Hours", totalHours);    
+    System.out.printf("%15s : %s%n","Telephone", telephone);    
+    System.out.println();
+}    
+
+
+//************ Other Setup ***************
+
+import java.util.*;
+import java.text.*;
+
+// copy the files for ShopData

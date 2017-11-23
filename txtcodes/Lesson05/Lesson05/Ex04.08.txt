@@ -1,0 +1,50 @@
+//************ classes ***************
+
+class MyThread extends Thread {
+    char id;
+    Aclass aclass;
+    MyThread(char id, Aclass aclass) {
+        this.id = id;
+        this.aclass = aclass;
+    }
+    public void run() {
+        aclass.method1(id);
+    }
+}
+
+class Aclass {
+    Lock lock = new ReentrantLock();
+    void method1(char id) {
+        Boolean myLock = false;
+        myLock = lock.tryLock();
+        if (myLock) {
+            try {
+                System.out.println(id + ": Start running method1.");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {}
+                System.out.println(id + ": Finish running method1.");
+            } finally {
+                lock.unlock();
+            }
+        } else {
+            System.out.println(id + ": Locking failed. Aborting.");
+        }
+    }
+}
+
+
+//************ Main method ***************
+
+Aclass aclass = new Aclass();
+MyThread t1 = new MyThread('x',aclass);
+t1.start();
+while (t1.isAlive()) {
+}
+new MyThread('y',aclass).start();
+new MyThread('z',aclass).start();
+
+
+//************ Other Setup ***************
+
+import java.util.concurrent.locks.*;

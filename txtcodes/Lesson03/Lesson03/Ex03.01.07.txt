@@ -1,0 +1,50 @@
+//************ Class(es) ***************
+
+class Car implements Serializable {
+    String licenseNo;
+    private int speed;
+    Car (String s) {
+        licenseNo = s;
+    }
+    int getSpeed() {
+       return speed; 
+    }
+    void accelerate() {
+        speed = speed + 10;
+    }
+    void brake() {
+        speed = speed - 10;
+    }
+}
+
+
+//************ Main Method ***************
+
+// first part
+Car c1 = new Car("AB1234");
+c1.accelerate();
+try (FileOutputStream fos = new FileOutputStream("c:\\javaex\\file6.dat");
+     ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+    oos.writeObject("abcde");
+    oos.writeObject(c1);
+} catch (IOException e) {
+}
+
+// second part
+String s = null;
+Car c2 = null;
+try (FileInputStream fis = new FileInputStream("c:\\javaex\\file6.dat");
+     ObjectInputStream ois = new ObjectInputStream(fis)) {
+    s = (String) ois.readObject();
+    c2 = (Car) ois.readObject();
+} catch (IOException|ClassNotFoundException e) {
+    System.out.println(e.getMessage());
+}
+System.out.println(s);
+System.out.println(c2.licenseNo);
+System.out.println(c2.getSpeed());
+
+
+//************ Other Setup ***************
+
+import java.io.*;

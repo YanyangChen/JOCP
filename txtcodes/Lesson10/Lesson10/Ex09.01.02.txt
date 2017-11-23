@@ -1,0 +1,33 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Locale[] locale = new Locale[4];
+locale[0] = new Locale.Builder().setLanguage("zh").setRegion("HK").build();
+locale[1] = new Locale("zh", "HK");
+locale[2] = Locale.forLanguageTag("zh-HK");
+locale[3] = Locale.CHINA;
+
+for (Locale l : locale) {
+    System.out.println(l.getLanguage()+" - "+l.getCountry()+", " +
+                           l.getDisplayName());
+}
+
+Locale list[] = java.text.DateFormat.getAvailableLocales();
+int i = 0;
+for (Locale eachLocale : list) {
+    if (i++ % 10 == 0) {
+        System.out.println();
+    } else {
+        System.out.print(", ");
+    }
+    System.out.print(eachLocale.toString());
+}
+
+
+
+//************ Other Setup ***************
+
+import java.util.*;

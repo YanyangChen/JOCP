@@ -1,0 +1,77 @@
+//************ Class(es) ***************
+
+class Person {
+    private static int population;
+    private String name;
+    Passport[] passports = {};
+    static int totPassportCreated;
+    int personPassportCreated;
+    
+    Person(String n) {
+        name = n;
+        population++;
+    }
+    
+    void collectPassport(Passport p) {
+        passports = java.util.Arrays.copyOf(passports, passports.length+1);
+        passports[passports.length - 1] = p;
+    }
+    
+    void showPassports() {
+        System.out.println("Total number of passport(s) : " + passports.length);
+        for (Passport p : passports) {
+            System.out.print(p.type + " (" + p.serialNumber + ") - ");
+            System.out.println(p.getName());
+        }
+        System.out.println();
+    }
+    
+    void applyAndCollectPassport(String t, String s) {
+        collectPassport(new Passport(t, s));
+    }
+    
+    class Passport {
+        private String type;
+        private String serialNumber;
+        
+        Passport(String t, String s) {
+            type = t;
+            serialNumber = s;
+	    totPassportCreated++;
+            personPassportCreated++;
+        }
+        
+        String getName() {
+            return name;
+        }
+        
+        Person getPerson() {
+            return Person.this;
+        }
+        
+        int showPopulation() {
+            return population;
+        }
+    }    
+}
+
+
+
+//************ Main Method ***************
+
+Person peter = new Person("Peter");
+peter.showPassports();
+Person.Passport passport1 = peter.new Passport("HKSAR", "A12345");
+peter.collectPassport(passport1);
+peter.showPassports();
+Person.Passport passport2 = peter.new Passport("BNO", "D45678");
+peter.collectPassport(passport2);
+peter.showPassports();
+System.out.println(peter == passport1.getPerson());
+System.out.println(passport1.showPopulation());
+System.out.println();
+Person john = new Person("john");
+john.applyAndCollectPassport("HKSAR", "A123456");
+john.showPassports();
+System.out.println(Person.totPassportCreated);
+System.out.println(peter.personPassportCreated);

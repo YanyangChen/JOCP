@@ -1,0 +1,59 @@
+//************ Class(es) ***************
+
+class Cal extends Thread {
+    char id;
+    int number;
+    Cal(char id, int number) {
+        this.id = id;
+        this.number = number;
+    }
+    public void run() {
+        long sum=0;
+        for (int i=1;i<number;i++) {
+            sum = sum + i;
+        }
+        System.out.println("The value of " + id + " is " + sum);
+    }
+}
+
+
+
+//************ Main Method ***************
+
+Cal calx = new Cal('x', 100000000);
+Cal caly = new Cal('y', 100);
+System.out.println("Calculation for X and Y started : ");
+calx.start();
+caly.start();
+do {
+    if (calx.isAlive()) {
+        System.out.println("X");
+    }
+    if (caly.isAlive()) {
+        System.out.println("Y");
+    }
+    try {
+        Thread.sleep(10);
+    } catch (InterruptedException ex) {
+        System.out.println(ex);
+    }
+} while (calx.isAlive() || caly.isAlive()); 
+System.out.println("X and Y calculations completed");
+
+System.out.println();
+
+Cal cala = new Cal('a', 100000000);
+Cal calb = new Cal('b', 100);
+cala.start();
+calb.start();
+try {
+    cala.join();
+    calb.join();
+} catch (InterruptedException ex) {
+    System.out.println(ex);
+}
+System.out.println("A and B calculations completed");
+
+
+//************ Other Setup ***************
+

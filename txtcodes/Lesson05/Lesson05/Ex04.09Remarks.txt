@@ -1,0 +1,103 @@
+//************ classes ***************
+
+class MyThread extends Thread {
+    Counter c = null;
+    MyThread(Counter c) {
+        this.c = c;
+    }
+    public void run() {
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) { }
+        c.increment(); 
+        System.out.println("Counter Incremented");        
+    }
+}
+
+interface Counter {
+    void increment();
+    int getC();
+}
+
+class Counter1 implements Counter{
+    private int c = 0;
+
+    public synchronized void increment() {
+        c++;
+    }
+    public synchronized int getC() {
+        return c;
+    }
+}
+
+class Counter2 implements Counter{
+    private AtomicInteger c = new AtomicInteger(0);  // choose one of the three to uncomment and comment others
+
+    public synchronized void increment() {
+        c.getAndIncrement();
+    }
+    public int getC() {
+        return c.get();
+    }
+}
+
+class Counter3 implements Counter {
+    private volatile int c = 0;
+
+    public synchronized void increment() {
+        c++;
+    }
+    public int getC() {
+        return c;
+    }
+}
+
+class Counter4 implements Counter {
+    private int c = 0;
+
+    public synchronized void increment() {
+        c++;
+    }
+    public int getC() {
+        return c;
+    }
+}
+
+
+
+//************ Main method ***************
+
+Counter1 c1 = new Counter1();
+new MyThread(c1).start();
+while (c1.getC() == 0) {
+}
+System.out.println("C1 Counter Not Zero");
+
+Counter2 c2 = new Counter2();
+new MyThread(c2).start();
+while (c2.getC() == 0) {
+}
+System.out.println("C2 Counter Not Zero");
+
+Counter3 c3 = new Counter3();
+new MyThread(c3).start();
+while (c3.getC() == 0) {
+}
+System.out.println("C3 Counter Not Zero");
+
+// the loop in this last counter will run forever !!
+Counter4 c4 = new Counter4();
+new MyThread(c4).start();
+while (c4.getC() == 0) {
+}
+System.out.println("C4 Counter Not Zero");
+
+
+//************ Other Setup ***************
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+
+//************ Notes ***************
+
+The last output "C4 Counter Not Zero" will not be shown, you need to stop the application manually.

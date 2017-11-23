@@ -1,0 +1,31 @@
+//************ Class(es) ***************
+
+class MyResource implements AutoCloseable {
+    String name;
+    MyResource (String s) {
+        name = s;
+        System.out.println(name + " has created and opening resource");
+    }
+    public void close() {
+        System.out.println(name + " resource closed.");
+    }
+    void doThing() throws Exception {
+        System.out.println(name + " doing thing.");
+        throw new Exception(name + " went into trouble.");
+    }
+}
+
+//************ Main Method ***************
+
+try (MyResource r1 = new MyResource("R1"); 
+     MyResource r2 = new MyResource("R2");) {
+    r1.doThing();
+    r2.doThing();
+} catch (Exception e) {
+    System.out.println(e.getMessage());    
+}
+
+
+//************ Other Setup ***************
+
+

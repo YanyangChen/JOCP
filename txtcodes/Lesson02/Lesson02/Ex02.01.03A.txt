@@ -1,0 +1,28 @@
+//************ Class(es) ***************
+
+class ArrayWith7Elements extends ArrayIndexOutOfBoundsException { }
+
+class ArrayInfo { 
+    static int cal(int[] a) {
+        if (a.length == 7) {
+            throw new ArrayWith7Elements();
+        }
+        int sum = 0;
+        for (int i=0;i<5;i++) {
+            sum += a[i];
+            System.out.println("Adding element " + i + " to sum");
+        }
+        return sum;
+    }
+}
+
+
+//************ Main Method ***************
+
+int[] a = {1, 2, 3, 4, 5, 6, 7};
+try {
+    System.out.println(ArrayInfo.cal(a));
+} catch (ArrayIndexOutOfBoundsException  ex) {
+    System.out.println("Array has invalid number of elements");
+    System.out.println(ex);
+}

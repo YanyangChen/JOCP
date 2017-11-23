@@ -1,0 +1,63 @@
+﻿//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+Locale myLocale = Locale.getDefault();
+System.out.println(myLocale.getDisplayName());
+
+Date day = new Date();
+DateFormat df = DateFormat.getInstance();
+String dateStr = df.format(day);
+System.out.println(dateStr);
+
+System.out.println("\n*************\n");
+System.out.println(DateFormat.getDateInstance(DateFormat.SHORT).format(day));
+System.out.println(DateFormat.getDateInstance(DateFormat.MEDIUM).format(day));
+System.out.println(DateFormat.getDateInstance(DateFormat.LONG).format(day));
+System.out.println(DateFormat.getDateInstance(DateFormat.FULL).format(day));
+System.out.println(DateFormat.getTimeInstance(DateFormat.SHORT).format(day));
+System.out.println(DateFormat.getTimeInstance(DateFormat.MEDIUM).format(day));
+System.out.println(DateFormat.getTimeInstance(DateFormat.LONG).format(day));
+System.out.println(DateFormat.getTimeInstance(DateFormat.FULL).format(day));
+System.out.println("\n*************\n");
+
+Locale[] locales = new Locale[4];
+locales[0] = new Locale("zh", "HK");
+locales[1] = new Locale("ja", "JP");
+locales[2] = new Locale("en", "GB");
+locales[3] = new Locale("de", "DE");
+Date day1 = new Date();
+
+for (Locale locale : locales) {
+    DateFormat df1 = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+    DateFormat df2 = DateFormat.getDateInstance(DateFormat.FULL, locale);
+    DateFormat df3 = DateFormat.getTimeInstance(DateFormat.FULL, locale);
+    
+    System.out.println(locale.toString() + " : ");
+    System.out.println( df1.format(day1) );
+    System.out.println( df2.format(day1) );
+    System.out.println( df3.format(day1) );
+    System.out.println();
+}
+
+System.out.println("\n*************\n");
+
+Date myDay = new Date();
+Locale l = new Locale("zh", "HK");
+DateFormat myDF = new SimpleDateFormat("MM/dd, yyyy",l);
+System.out.println(myDF.format(myDay));
+String yourDayStr = "2016/12-31";
+DateFormat yourDF = new SimpleDateFormat("yyyy/MM-dd");
+Date yourDay = null;
+try {
+    yourDay = yourDF.parse(yourDayStr);
+} catch (ParseException e) {}
+System.out.println(yourDay);
+
+
+//************ Other Setup ***************
+
+import java.util.*;
+import java.text.*;

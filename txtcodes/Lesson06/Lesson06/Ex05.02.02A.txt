@@ -1,0 +1,55 @@
+//************ classes ***************
+
+
+
+//************ Main method ***************
+
+TreeSet<Integer> ts = new TreeSet<Integer>();
+ts.add(6);
+ts.add(6);  // duplicate will be ignored
+ts.add(3);
+ts.add(4);
+ts.add(1);
+ts.add(7);
+ts.add(2);
+ts.add(5);
+System.out.println();
+
+System.out.println("Getting item using iterator:");
+Iterator<Integer> it = ts.iterator();
+while (it.hasNext()) {
+    System.out.print(it.next()+ " ");                       // 1 2 3 4 5 6 7
+}
+System.out.println();
+System.out.println();
+
+System.out.println("Getting items using toString():");
+System.out.println("TreeSet ts contains " + ts);   // [1, 2, 3, 4, 5, 6, 7]
+System.out.println();
+
+TreeSet<Integer> ts2 = (TreeSet<Integer>) ts.subSet(2,5);
+System.out.println("View ts2 contains " + ts2);    // [2, 3, 4]
+System.out.println();
+
+ts.remove(4);
+System.out.println("Removing 4 from TreeSet ts:");
+System.out.println("TreeSet ts contains " + ts);   // [1, 2, 3, 5, 6, 7]
+System.out.println("View ts2 contains " + ts2);    // [2, 3]
+System.out.println();
+
+//ts2.add(8);      // IllegalArgumentException: key out of range
+
+ts2.add(4);
+System.out.println("Adding 4 to view ts2:-");
+System.out.println("TreeSet ts contains " + ts);   // [1, 2, 3, 4, 5, 6, 7]
+System.out.println("View ts2 contains " + ts2);    // [2, 3, 4]
+System.out.println();
+
+System.out.println(ts.subSet(2,false,5,true));     // [3, 4, 5]
+
+// ts2.add(8);  //  cause RuntimeException
+
+
+//************ Other Setup ***************
+
+import java.util.*;

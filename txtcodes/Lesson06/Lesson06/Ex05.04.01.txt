@@ -1,0 +1,25 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+PriorityQueue<String> myqueue = new PriorityQueue<String>();
+myqueue.add("Vincent");
+myqueue.add("Peter");
+myqueue.add("Tom");
+System.out.print("Items in queue (not showing in retrieval order):");
+System.out.println(myqueue);
+System.out.println("Polling : " + myqueue.poll());
+System.out.println("Peek : " + myqueue.peek() );
+System.out.println("Polling : " + myqueue.poll());
+myqueue.add("Ann");
+System.out.println("Polling (after Ann added) : " + myqueue.poll());
+myqueue.add("Wilson");
+System.out.println("Polling (after Wilson added) : " + myqueue.poll());
+System.out.println("Polling : " + myqueue.poll());
+System.out.println("Polling : " + myqueue.poll());
+
+//************ Other Setup ***************
+
+import java.util.*;

@@ -1,0 +1,17 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+BufferedReader reader = new BufferedReader(inputStreamReader);
+System.out.println("Type name:");
+String name = reader.readLine();
+System.out.println("Hello "+name);
+
+//************ Other Setup ***************
+
+import java.io.*;
+
+throws IOException

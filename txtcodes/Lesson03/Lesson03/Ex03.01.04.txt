@@ -1,0 +1,41 @@
+//************ Class(es) ***************
+
+
+
+//************ Main Method ***************
+
+char[] carray = new char[1024];
+int totalCharRead = 0;
+
+try (FileReader ins = new FileReader("C:\\javaex\\file1.txt")) {
+    totalCharRead = ins.read(carray);
+} catch(FileNotFoundException fnfex) {
+    System.out.println("FileNotFoundException Err: " + fnfex.getMessage() );
+} catch(IOException ioex) {
+    System.out.println("IOException Err: " + ioex.getMessage() );
+}
+
+System.out.println(carray);
+
+try (FileWriter outs = new FileWriter("C:\\javaex\\file4.txt")) {
+    outs.write(carray,0,totalCharRead);
+} catch(IOException ioex) {
+    System.out.println("IOException Err: " + ioex.getMessage() );
+}
+
+try (FileWriter outs = new FileWriter("C:\\javaex\\file4.txt", true)) {
+    outs.write("\r\n\r\n\r\n");
+    for (int i=0;i<totalCharRead;i++) {
+        outs.write(carray[i]);
+        if (carray[i] == '.') {
+           outs.write("\r\n");
+        }
+    }
+} catch(IOException ioex) {
+    System.out.println("IOException Err: " + ioex.getMessage() );
+}
+
+
+//************ Other Setup ***************
+
+import java.io.*;

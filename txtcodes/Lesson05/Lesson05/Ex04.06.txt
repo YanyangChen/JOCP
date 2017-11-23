@@ -1,0 +1,140 @@
+//************ Step 2 ***************
+
+class Transaction extends Thread {
+    BankAccount transferer;
+    BankAccount transferee;
+    int amount;
+    Transaction (BankAccount transferer, BankAccount transferee, int amount) {
+        this.transferer = transferer;
+        this.transferee = transferee;
+        this.amount = amount;
+    }
+    public void run() {
+        transferer.transfer(transferee,amount);
+    }
+}
+
+class BankAccount {
+    String owner;
+    int balance;
+        BankAccount(String s, int initialDeposit) {
+        owner = s;
+        balance = initialDeposit;
+    }
+    
+    synchronized void deposit(int amount) {
+        balance = balance + amount;
+    }
+
+    synchronized void transfer(BankAccount target, int amount) {
+        try {
+            Thread.sleep(1000);  //process to verify authorization ..etc
+        } catch (InterruptedException e) {}
+        balance = balance - amount;
+        System.out.println("Amount " + amount + " is deducted from " + owner);
+        System.out.println("Trying to deposit the amount " + amount + " to " + target.owner);
+        target.deposit(amount);
+        System.out.println("Sucessful ("+owner+"->"+target.owner+" "+amount+")");
+        System.out.println(owner + " balance is now " + balance);
+        System.out.println(target.owner + " balance is now " + target.balance);        
+    }
+}
+
+
+//************ Step 3 ***************
+
+BankAccount peterAcc = new BankAccount("Peter",1000);
+BankAccount maryAcc = new BankAccount("Mary",2000);
+new Transaction(peterAcc,maryAcc,100).start();
+new Transaction(maryAcc,peterAcc,10).start();
+
+
+//************ Step 6 ***************
+
+class Transaction extends Thread {
+    BankAccount transferer;
+    BankAccount transferee;
+    int amount;
+    Transaction (BankAccount transferer, BankAccount transferee, int amount) {
+        this.transferer = transferer;
+        this.transferee = transferee;
+        this.amount = amount;
+    }
+    public void run() {
+        if (transferer.owner.compareTo(transferee.owner) > 0) {
+            transferee.transfer(transferer,amount * -1);
+        } else {
+            transferer.transfer(transferee,amount);
+        }
+    }
+}
+
+class BankAccount {
+    String owner;
+    int balance;
+        BankAccount(String s, int initialDeposit) {
+        owner = s;
+        balance = initialDeposit;
+    }
+    
+    synchronized void deposit(int amount) {
+        balance = balance + amount;
+    }
+
+    synchronized void transfer(BankAccount target, int amount) {
+        try {
+            Thread.sleep(1000);  //process to verify authorization ..etc
+        } catch (InterruptedException e) {}
+        balance = balance - amount;
+        System.out.println("Amount " + amount + " is deducted from " + owner);
+        System.out.println("Trying to deposit the amount " + amount + " to " + target.owner);
+        target.deposit(amount);
+        System.out.println("Sucessful ("+owner+"->"+target.owner+" "+amount+")");
+        System.out.println(owner + " balance is now " + balance);
+        System.out.println(target.owner + " balance is now " + target.balance);        
+    }
+}
+
+//************ Step 8 ***************
+
+class Transaction extends Thread {
+    BankAccount transferer;
+    BankAccount transferee;
+    int amount;
+    Transaction (BankAccount transferer, BankAccount transferee, int amount) {
+        this.transferer = transferer;
+        this.transferee = transferee;
+        this.amount = amount;
+    }
+    public void run() {
+        transferer.transfer(transferee,amount);
+    }
+}
+
+class BankAccount {
+    String owner;
+    int balance;
+        BankAccount(String s, int initialDeposit) {
+        owner = s;
+        balance = initialDeposit;
+    }
+    
+    synchronized void deposit(int amount) {
+        balance = balance + amount;
+    }
+
+    void transfer(BankAccount target, int amount) {
+        try {
+            Thread.sleep(1000);  //process to verify authorization ..etc
+        } catch (InterruptedException e) {}
+        synchronized(this) {
+            balance = balance - amount;
+        }
+        System.out.println("Amount " + amount + " is deducted from " + owner);
+        System.out.println("Trying to deposit the amount " + amount + " to " + target.owner);
+        target.deposit(amount);
+        System.out.println("Sucessful ("+owner+"->"+target.owner+" "+amount+")");
+        System.out.println(owner + " balance is now " + balance);
+        System.out.println(target.owner + " balance is now " + target.balance);        
+    }
+}
