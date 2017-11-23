@@ -87,4 +87,22 @@ public static void main(String[] args)
 	System.out.println(cr1.counter2);
 	cr1.staticmethod2();
 	
+	Bus bus = new Bus();
+	bus.accelerate();
+	System.out.println(bus.getMilePerHour());
+	System.out.println(bus.getPreciseMilePerHour());
+	Van van = new Van();
+	van.accelerate();
+	System.out.println(van.getMilePerHour());
+	System.out.println(van.getPreciseMilePerHour());
+	
+	
+	Person peter = new Person();
+	Person mary = new Person();
+	Car car1 = new Car();
+	peter.payTax(1000);
+	mary.payTax(2000);
+	car1.extendLicense(3000);
+	GovernmentFinder.getInstance().getGovernment().treasuryReport();
+	
 }}

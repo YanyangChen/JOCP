@@ -5,6 +5,11 @@ class Person {
     String name;
     int birthYear;
     String address;
+    void payTax(int money) {
+    	GovernmentFinder.getInstance().getGovernment().collectMoney(money);
+    	
+    }
+    
 }
 
 interface Turbo {
@@ -61,7 +66,11 @@ public class Car extends Vehicle{
     public int getSpeed() {
         return (int) speed; 
     }
-
+    
+    void extendLicense(int money) {
+    	GovernmentFinder.getInstance().getGovernment().collectMoney(money);
+    }
+    
     float getSpeed2() {
         return speed;
     }
