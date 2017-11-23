@@ -6,20 +6,59 @@ class Person {
     int birthYear;
     String address;
 }
-public class Car {
+
+interface Turbo {
+    void toggleTurbo ();
+}
+
+interface SpeedInMile {
+    final double km2mile = 0.62137;
+    int getSpeed();
+    int getMilePerHour();
+    default double getPreciseMilePerHour() {
+        return Math.round(this.getSpeed()*km2mile*100)/100.0;  
+    }
+}
+
+interface Drive extends SpeedInMile {
+    void accelerate();
+    void brake();
+}
+
+abstract class Vehicle implements Drive {
+    int speed;
+}
+
+public class Car extends Vehicle{
 	char color;
     boolean engineRunning;
    int speed;
 //    float speed;
     Person owner;
+    
+    
+    
+    
     Car() {
         color = 'W';
         engineRunning = false;
         speed = 0;
+        counter1++;
+        counter2++;
     }
     
+    static int counter1;
+    static int counter2;
+    static {
+        counter1 = 0;
+        counter2 = 0;
+    }
+    
+    static void staticmethod2() {
+        System.out.println("Car");
+    }
     //continue to support int getspeed
-    int getSpeed() {
+    public int getSpeed() {
         return (int) speed; 
     }
 
@@ -30,7 +69,12 @@ public class Car {
     char getColor() {
         return color; 
     }
-
+    
+    @Override
+    public int getMilePerHour() {		// implements SpeedInMile¡¦s method
+        return (int) Math.round(speed*km2mile);  
+    }
+    
     void setColor(char c) {
         if ("WRGB".indexOf(c) >= 0) { 
             color = c; 
@@ -41,13 +85,13 @@ public class Car {
         engineRunning = ! engineRunning; 
     }
 
-    void accelerate() {
+    public void accelerate() {
         if (engineRunning) {
             speed = speed + 10; 
         }
     }
 
-    void brake() {
+    public void brake() {
         if (speed >= 10) {
 	        speed = speed - 10; 
         } else {
@@ -69,4 +113,11 @@ public class Car {
     	mycar.brake();        
     	System.out.println(mycar.speed);	
     }
+
+	void setEngineRunning(boolean b) {
+		// TODO Auto-generated method stub
+		this.engineRunning = b;
+	}
+	
+	
 }

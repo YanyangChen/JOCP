@@ -51,5 +51,40 @@ public static void main(String[] args)
 	racingcar1.brake();
 	System.out.println(racingcar1.speed);
 	//hidden instance variable can be accessed in many ways
+	//if a member instance variable in the superclass has private as access modifier, it is not inherited
 	System.out.println(((Car) racingcar1).speed);
+	
+	RacingCar1 racingcar = new RacingCar1();
+	racingcar.accelerate();
+	racingcar.brake();
+	System.out.println(racingcar.getSpeed());
+	RacingCar1 racingcar01 = new RacingCar1();
+	RacingCar2 racingcar02 = new RacingCar2();
+	Car[] cars = { racingcar01, racingcar02 };
+	for (Car c : cars) {
+	    c.accelerate();
+	    //c.speed read hidden superclass's variable
+	    System.out.println(c.speed + " : " + c.getSpeed());
+	}
+	
+	
+	//static variable/method can be inherited. If they are overridden in subclass, 
+    //they are hidden like instant variables
+	Car c1 = new Car();
+	Car c2 = new Car();
+	RacingCar r1 = new RacingCar();
+	RacingCar r2 = new RacingCar();
+	RacingCar r3 = new RacingCar();        
+	System.out.print(Car.counter1 + " : ");
+	System.out.println(c1.counter1);
+	System.out.print(Car.counter2 + " : ");
+	System.out.println(c1.counter2);
+	System.out.print(RacingCar.counter1 + " : ");
+	System.out.println(r1.counter1);
+	System.out.print(RacingCar.counter2 + " : ");
+	System.out.println(r1.counter2);
+	Car cr1 = r1;
+	System.out.println(cr1.counter2);
+	cr1.staticmethod2();
+	
 }}
