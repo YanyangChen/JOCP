@@ -9,8 +9,8 @@ class Person {
 public class Car {
 	char color;
     boolean engineRunning;
-//   int speed;
-    float speed;
+   int speed;
+//    float speed;
     Person owner;
     Car() {
         color = 'W';
