@@ -97,12 +97,71 @@ public static void main(String[] args)
 	System.out.println(van.getPreciseMilePerHour());
 	
 	
-	Person peter = new Person();
+	Person peter1 = new Person();
 	Person mary = new Person();
 	Car car1 = new Car();
-	peter.payTax(1000);
+	peter1.payTax(1000);
 	mary.payTax(2000);
 	car1.extendLicense(3000);
 	GovernmentFinder.getInstance().getGovernment().treasuryReport();
 	
+	NoteBook111 nb1 = new NoteBook111();
+	NoteBook111.Battery b1 = new NoteBook111.Battery();
+	NoteBook111.Battery b2 = new NoteBook111.Battery();
+	nb1.getSytemStatus();
+	b1.charging(4);
+	nb1.replaceBattery(b1);
+	nb1.getSytemStatus();
+	nb1.replaceBattery(b2);
+	nb1.getSytemStatus();
+	NoteBook111.Battery.getCounters();
+	
+	
+	Person peter = new Person("Peter");
+	peter.showPassports();
+	Person.Passport passport1 = peter.new Passport("HKSAR", "A12345");
+	peter.collectPassport(passport1);
+	peter.showPassports();
+	Person.Passport passport2 = peter.new Passport("BNO", "D45678");
+	peter.collectPassport(passport2);
+	peter.showPassports();
+	System.out.println(peter == passport1.getPerson());
+	System.out.println(passport1.showPopulation());
+	
+	
+	Person peter2 = new Person("Peter2");
+	peter2.showPassports();
+	Person.Passport passport11 = peter2.new Passport("HKSAR", "A12345");
+	peter2.collectPassport(passport1);
+	peter2.showPassports();
+	Person.Passport passport21 = peter2.new Passport("BNO", "D45678");
+	peter2.collectPassport(passport2);
+	peter2.showPassports();
+	System.out.println(peter2 == passport1.getPerson());
+	System.out.println(passport1.showPopulation());
+	System.out.println();
+	Person john = new Person("john");
+	john.applyAndCollectPassport("HKSAR", "A123456");
+	john.showPassports();
+	System.out.println(Person.totPassportCreated);
+	System.out.println(peter2.personPassportCreated);
+	
+	CarTest t = new CarTest("Test20160101");
+	t.doTest();
+	CarTest.doTest2();
+	
+	CarTest t2 = new CarTest("Test20170101");
+	t2.doTest1();
+	CarTest.doTest2(15);
+	
+	
+	Staff peter3 = new Staff("Peter",Day.MONDAY);
+	System.out.println(peter3.name + " is off on " + peter3.getholiday());
+	System.out.println();
+	System.out.println("Earth mass : " + Planet.EARTH.getMass());
+	final int myWeight = 70;
+	double mass = myWeight/Planet.EARTH.surfaceGravity();
+	for (Planet p : Planet.values()) {
+	    System.out.printf("Your weight on %s is %f%n", p, p.surfaceWeight(mass));
+	}
 }}

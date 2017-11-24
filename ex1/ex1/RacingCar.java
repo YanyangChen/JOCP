@@ -1,5 +1,7 @@
 package ex1;
 
+//default access modifier: can be used from any class in the same package
+//private: can only be used from the same class, not even any class in the same package or subclass in the same package
 class RacingCar1 extends Car {
     float speed;
     
@@ -31,9 +33,11 @@ class RacingCar2 extends Car {
         return (int) speed;
     }
 }
+
 //inheritance from Car class 
 public class RacingCar extends Car implements Turbo {
-	
+//public: can be used by any class outside the same package
+//protected: can be used from a subclass outside the same package but not from non-subclass
 //	    boolean spoiler;
 	    boolean spoiler;
 	    float speed;

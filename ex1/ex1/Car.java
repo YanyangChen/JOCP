@@ -2,7 +2,13 @@ package ex1;
 
 //extract from car class for cohension
 class Person { 
-    String name;
+	private static int population;
+    private String name;
+    Passport[] passports = {};
+//    String name;
+    static int totPassportCreated;
+    int personPassportCreated;
+    
     int birthYear;
     String address;
     void payTax(int money) {
@@ -10,6 +16,59 @@ class Person {
     	
     }
     
+    Person() {
+//        name = n;
+        population++;
+    }
+    
+    Person(String n) {
+        name = n;
+        population++;
+    }
+    
+    void collectPassport(Passport p) {
+        passports = java.util.Arrays.copyOf(passports, passports.length+1);
+        passports[passports.length - 1] = p;
+    }
+    
+    void showPassports() {
+        System.out.println("Total number of passport(s) : " + passports.length);
+        for (Passport p : passports) {
+            System.out.print(p.type + " (" + p.serialNumber + ") - ");
+            System.out.println(p.getName());
+        }
+        System.out.println();
+    
+       
+    
+    }
+    void applyAndCollectPassport(String t, String s) {
+        collectPassport(new Passport(t, s));
+    }
+    
+    class Passport {
+        private String type;
+        private String serialNumber;
+        
+        Passport(String t, String s) {
+            type = t;
+            serialNumber = s;
+            totPassportCreated++;
+            personPassportCreated++;
+        }
+        
+        String getName() {
+            return name;
+        }
+        
+        Person getPerson() {
+            return Person.this;
+        }
+        
+        int showPopulation() {
+            return population;
+        }
+    } 
 }
 
 interface Turbo {
