@@ -35,6 +35,74 @@ public class ex2 {
 		    System.out.println(ex.getClass());
 		    System.out.println(ex);
 		}
+		
+		//catching exceptions
+		System.out.println("testing******************self made exception objects");
+		int[] a = {1, 2, 3, 4};
+		try {
+		    System.out.println(ArrayInfo.cal(a));
+		} catch (ArrayIndexOutOfBoundsException  ex) {
+		    System.out.println("Array has invalid number of elements");
+		}
+		
+		int[] a2 = {1, 2, 3, 4, 5, 6, 7};
+		try {
+		    System.out.println(ArrayInfo.cal2(a2));
+		} catch (ArrayIndexOutOfBoundsException  ex) { //catch superclass exception
+		    System.out.println("Array has invalid number of elements");
+		    System.out.println(ex);//print out subclass exception type
+		}
+		
+		System.out.println("testing******************CarCrashException");
+		Car car3 = new Car();
+		try {
+		    car3.accelerate();
+		    car3.accelerate();
+		    car3.accelerate();
+		    car3.accelerate();
+		} catch (CarCrashException ex) {
+		    System.out.println(ex.getMessage());
+		}
+		System.out.println("\n \n "); //adding space lines
+		System.out.println("testing******************using simulation object and its subclasses ");
+		for (int i=0;i<=5;i++) {
+		    Simulation s = new Simulation(i);
+		    try {
+		        s.doTest();
+		        System.out.println("Test " + i + " runs succesfully");
+		    } catch (ArithmeticException|ArrayIndexOutOfBoundsException ex ) {
+		        System.out.println("Test " + i + " aborted due to " + ex);
+		    }
+		}
+		System.out.println();
+		System.out.println("** Simulation Statistics **");
+		System.out.println("Test run : " + Simulation.testRun);
+		System.out.println("Part1 fails : " + Simulation.part1Error);
+		System.out.println("Part2 fails : " + Simulation.part2Error);
+		System.out.println("Part3 fails : " + Simulation.part3Error);
+		System.out.println("Success : " + Simulation.successRun);
+		
+		System.out.println("\n \n "); //adding space lines
+		System.out.println("testing******************using 2nd simulation object and its subclasses ");
+		for (int i=0;i<=5;i++) {
+		    Simulation s = new Simulation(i);
+		    try {
+		        s.doTest2();
+		        System.out.println("Test " + i + " runs succesfully");
+//		    } catch (SimulationNormalException ex ) {
+		    } catch (Exception ex ) {
+		        System.out.println("Test " + i + " aborted due to " + ex);
+		        System.out.println("       Caused by : " + ex.getCause());
+		    }
+		}
+		
+		
+		System.out.println(" \n \n testing******************using Car acceleration2 ");
+		int i = Integer.parseInt("-5");
+		assert(i >= 0): "i is negative with value " + i;
+		Car mycar= new Car();
+		mycar.accelerate2(i);
+		
 	}
 
 }
