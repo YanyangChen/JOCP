@@ -1,0 +1,48 @@
+package ex5;
+import java.util.*;
+public class list {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> mylist = new ArrayList<Integer>();
+		mylist.add(2);
+		mylist.add(3);
+		mylist.add(3);
+		mylist.add(2);
+		mylist.add(6);
+		mylist.add(5);
+		mylist.add(4);
+		mylist.add(4);
+		System.out.println("Before change :");
+		System.out.println("Size : " + mylist.size());   // 8
+		System.out.println("Items : " + mylist);     // [2, 3, 3, 2, 6, 5, 4, 4]
+		System.out.println();
+
+		mylist.set(0,7);           // set item in index 0 to 7
+		mylist.remove(4);          // remove item in index 4 (i.e. value 6)
+		mylist.add(-33);           // append item -33 at the end
+		System.out.println("After change :");
+		System.out.println("Size : " + mylist.size());  // 8
+		System.out.println("Items : " + mylist);   // [7, 3, 3, 2, 5, 4, 4, -33]
+		System.out.println();
+
+		if (mylist.contains(4)) {
+		    int i = mylist.indexOf(4);             // find first index of value 4
+		    mylist.remove(mylist.indexOf(4));    // and remove it
+		}
+
+		Collections.sort(mylist);
+		System.out.println("After sort :");
+		System.out.println("Items : " + mylist);  // [-33, 2, 3, 3, 4, 5, 7]
+		System.out.println();
+
+		Collections.reverse(mylist);
+		System.out.println("After reverse :");
+		System.out.println("Items : " + mylist);  // [7, 5, 4, 4, 3, 3, 2, -33]
+		System.out.println();
+
+		System.out.println(mylist.get(mylist.size()-1));    // get last item
+
+	}
+
+}

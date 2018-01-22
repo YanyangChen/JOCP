@@ -124,3 +124,29 @@ class Calydg extends Thread {
         System.out.println("The value of " + id + " is " + sum);
     }
 }
+
+class Aclass extends Thread {
+    char target;
+    int noofruns;
+    Aclass (char a, int b) {
+        target = a;
+        noofruns = b;
+    }
+    public void run() {
+        Calclass.cal(target, noofruns);
+    }
+}
+
+class Calclass {
+    static long k;
+    static void cal(char target, int noofruns) {
+        k = 0;
+        for (int i=1;i<=noofruns;i++) {
+            if (i<10) {
+                System.out.println("Adding i ("+i+") to k ("+k+") for "+target); 
+            } 
+            k = k + i;
+        }
+        System.out.println("The value of "+target+" is " +k);
+    }
+}

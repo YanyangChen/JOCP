@@ -1,0 +1,60 @@
+package ex5;
+import java.util.*;
+public class list_sorting {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<Car1> mylist1 = new ArrayList<Car1>();
+		mylist1.add(new Car1("BB2345"));
+		mylist1.add(new Car1("AA1234"));
+		mylist1.add(new Car1("CC3456"));
+		System.out.print("mylist1 Just Added : ");
+		System.out.println(mylist1);   // [BB2345, AA1234, CC3456]
+		Collections.sort(mylist1);
+		System.out.print("mylist1 After Sorting : ");
+		System.out.println(mylist1);   // [AA1234, BB2345, CC3456]
+		System.out.println();
+
+		ArrayList<Car2> mylist2 = new ArrayList<Car2>();
+		mylist2.add(new Car2("BB2345"));
+		mylist2.add(new Car2("AA1234"));
+		mylist2.add(new Car2("CC3456"));
+		System.out.print("mylist2 Just Added : ");
+		System.out.println(mylist2);   // [BB2345, AA1234, CC3456]
+		// Collections.sort(mylist2);     // compilation error
+		Comparator<Car2> c2 = new Comparator<Car2>() {
+		    public int compare(Car2 i, Car2 j) {
+		        return i.toString().compareTo(j.toString());
+		    }
+		};
+		Collections.sort(mylist2,c2);
+		System.out.print("mylist2 After Sorting : ");
+		System.out.println(mylist2);   // [AA1234, BB2345, CC3456]
+		System.out.println();
+
+		ArrayList<Car3> mylist3 = new ArrayList<Car3>();
+		Car3 car3a = new Car3("AA1234");
+		Car3 car3b = new Car3("BB2345");
+		Car3 car3c = new Car3("CC3456");
+		mylist3.add(car3a);
+		mylist3.add(car3b);
+		mylist3.add(car3c);
+		System.out.print("mylist3 Just Added : ");
+		System.out.println(mylist3);   // [AA1234, BB2345, CC3456]
+		car3a.accelerate();
+		car3b.accelerate();
+		car3b.accelerate();
+		System.out.print("mylist3 After Speed Change : ");
+		Iterator<Car3> it = mylist3.iterator();  // support iterator
+		while (it.hasNext()) {
+		    Car3 c = it.next();
+		    System.out.print(c + ":" + c.speed + "  ");  // AA1234:10  BB2345:20  CC3456:0
+		}
+		System.out.println();
+		Collections.sort(mylist3);
+		System.out.print("mylist3 After Sorting : ");
+		System.out.println(mylist3);   // [CC3456, AA1234, BB2345]
+		System.out.println();
+	}
+
+}
